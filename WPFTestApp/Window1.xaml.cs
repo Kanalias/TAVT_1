@@ -26,21 +26,35 @@ namespace WPFTestApp
 		private Archer[] Archers =  new Archer[8];
 		private string[] Mast = new string[8];
 		private string[] Contry = new string[8];
+
+        private Label[] Counters = new Label[8];
 		
 		public Window1()
 		{
 			InitializeComponent();
-			//InitArchers();
-			SpeedText.Text = SpeedSlider.Value.ToString();
+			InitArchers();
+            //InitCounters();
+            SpeedText.Text = SpeedSlider.Value.ToString();
 		}
 		
 		private void InitArchers()
 		{
-			for(int i = 1; i<9; i++)
+			for(int i = 0; i<8; i++)
 			{
 				Archers[i] = new Archer();
+                MyStack.Children.Add(Archers[i].Counter);
 			}
 		}
+
+        private void InitCounters()
+        {
+            for (int i=0; i<8; i++)
+            {
+                Counters[i] = new Label();
+                Counters[i].Content = "AZAZA";
+                MyStack.Children.Add(Counters[i]);
+            }
+        }
 	
 		private void ExitButtonClick(object sender, RoutedEventArgs e)
 		{

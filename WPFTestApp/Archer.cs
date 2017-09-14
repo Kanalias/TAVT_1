@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Windows.Controls;
 
 namespace WPFTestApp
 {
@@ -18,14 +19,17 @@ namespace WPFTestApp
 		private string Country;
 		public int Count;
 		private string Mastery;
-		public int shoots;  
+		public int shoots;
+        public Label Counter;
 		
 		public Archer()
 		{
 			Count = 0;
 			Mastery = "";
 			Country = "";
-			shoots = 0;			
+			shoots = 0;
+            Counter = new Label();
+            Counter.Content = "0";
 		}
 		
 	}
