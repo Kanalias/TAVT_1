@@ -16,11 +16,11 @@ namespace WPFTestApp
 	/// </summary>
 	public class Archer
 	{
-		private string Country;
+		public string Country;
 		public int Count;
-		private string Mastery;
+		public string Mastery;
 		public int shoots;
-        public Label Counter;
+        public TextBlock Counter;
 		
 		public Archer()
 		{
@@ -28,8 +28,12 @@ namespace WPFTestApp
 			Mastery = "";
 			Country = "";
 			shoots = 0;
-            Counter = new Label();
-            Counter.Content = "0";
+            Counter = new TextBlock();
+            Counter.Text = "0";
+            Counter.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Counter.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            //Counter.Height = 30;
+            Counter.Margin = new System.Windows.Thickness(5, 0, 30, 14.5);
 		}
 		
 	}

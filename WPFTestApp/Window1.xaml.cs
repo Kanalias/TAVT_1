@@ -15,6 +15,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
+using System.Threading;
 
 namespace WPFTestApp
 {
@@ -24,16 +26,15 @@ namespace WPFTestApp
 	public partial class Window1 : Window
 	{
 		private Archer[] Archers =  new Archer[8];
-		private string[] Mast = new string[8];
-		private string[] Contry = new string[8];
+        private bool pause;
 
-        private Label[] Counters = new Label[8];
+
 		
 		public Window1()
 		{
 			InitializeComponent();
 			InitArchers();
-            //InitCounters();
+            
             SpeedText.Text = SpeedSlider.Value.ToString();
 		}
 		
@@ -45,16 +46,6 @@ namespace WPFTestApp
                 MyStack.Children.Add(Archers[i].Counter);
 			}
 		}
-
-        private void InitCounters()
-        {
-            for (int i=0; i<8; i++)
-            {
-                Counters[i] = new Label();
-                Counters[i].Content = "AZAZA";
-                MyStack.Children.Add(Counters[i]);
-            }
-        }
 	
 		private void ExitButtonClick(object sender, RoutedEventArgs e)
 		{
@@ -76,11 +67,58 @@ namespace WPFTestApp
 		
 		void StartButtonClick(object sender, RoutedEventArgs e)
 		{
-			
-		}
+            if (StartButton.Content.ToString() == "Start")
+            {
+                StartButton.Content = "Stop";
+                //StartShooting();
+            }
+            else
+            {
+                StartButton.Content = "Start";
+                //StopShooting();
+                for (int i = 0; i <= 7; i++)
+                {
+                    Archers[i].Count = 0;
+                    Archers[i].Counter.Text = "0";
+                }
+
+            }
+
+        }
+
+        /*private void Shoot()    //Метод Shoot прогоняет 10 выстрелов
+        {
+            for (int i = 1; i<=1; i++)
+            {
+                for (int j = 0;j<=3;j++)
+                {
+                    int range = 0;
+                    int grad = 0;
+                    int xc = 165;
+                    int yc = 165;
+                    Random rnd = new Random();
+                    range = rnd.Next(0, 165);
+                    grad = rnd.Next(0, 360);
+                    Point.Width = 4;
+                    Point.Height = 4;
+                    Point.Margin = new Thickness(xc + Math.Cos(grad)*range -2 ,yc - Math.Sin(grad)*range - 2,xc - Math.Cos(grad)*range - 2,yc + Math.Sin(grad)*range - 2);
+                    Archers[j].Count += Math.Abs(range/15 - 10);
+                    Archers[j].Counter.Text = Archers[j].Count.ToString();
+                }
+                MessageBox.Show("End of competition");
+            }
+        }*/
+
 		void PauseButonCLick(object sender, RoutedEventArgs e)
 		{
-	
+	        if (PauseButton.Content.ToString() == "Pause")
+            {
+                PauseButton.Content = "Continue";
+            }
+            else
+            {
+                PauseButton.Content = "Pause";
+            }
 		}
 		void window1_Loaded(object sender, RoutedEventArgs e)
 		{
