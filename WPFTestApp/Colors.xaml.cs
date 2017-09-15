@@ -23,10 +23,12 @@ namespace WPFTestApp
 	/// </summary>
 	public partial class Colors : Window
 	{
-		public Colors()
+        Archer[] Archers; 
+		public Colors(Archer[] a1)
 		{
 			InitializeComponent();
-		}
+            Archers = a1;
+        }
 		
 		private void ColorsExitButton(object sender, RoutedEventArgs e)
 		{

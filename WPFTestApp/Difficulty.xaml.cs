@@ -23,13 +23,35 @@ namespace WPFTestApp
 	/// </summary>
 	public partial class Difficulty : Window
 	{
-		public Difficulty()
+		public Difficulty(Archer[] a1)
 		{
 			InitializeComponent();
+            Archer[] BackUp = a1;
 		}
-		void Button_Click(object sender, RoutedEventArgs e)
-		{
-			this.Close();
-		}
-	}
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void LampSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void LampBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void LampBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+    }
 }

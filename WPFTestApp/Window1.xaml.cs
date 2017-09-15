@@ -46,7 +46,22 @@ namespace WPFTestApp
                 MyStack.Children.Add(Archers[i].Counter);
 			}
 		}
+
+        private void StartShooting()
+        {
+
+        }
 	
+        private void StopShooting()
+        {
+
+        }
+
+        private void PauseShooting()
+        {
+
+        }
+
 		private void ExitButtonClick(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
@@ -54,13 +69,13 @@ namespace WPFTestApp
 		
 		private void ColorsButtonClick(object sender, RoutedEventArgs e)
 		{
-			Window Color = new Colors();
+			Window Color = new Colors(Archers);
 			Color.Show();
 		}
 		
 		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)
 		{
-			Window Difficulty = new Difficulty();
+			Window Difficulty = new Difficulty(Archers);
 			Difficulty.Show();
 		}
 		
@@ -70,12 +85,12 @@ namespace WPFTestApp
             if (StartButton.Content.ToString() == "Start")
             {
                 StartButton.Content = "Stop";
-                //StartShooting();
+                StartShooting();
             }
             else
             {
                 StartButton.Content = "Start";
-                //StopShooting();
+                StopShooting();
                 for (int i = 0; i <= 7; i++)
                 {
                     Archers[i].Count = 0;
@@ -114,6 +129,7 @@ namespace WPFTestApp
 	        if (PauseButton.Content.ToString() == "Pause")
             {
                 PauseButton.Content = "Continue";
+                PauseShooting();
             }
             else
             {
