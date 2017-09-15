@@ -25,7 +25,7 @@ namespace WPFTestApp
 		public Archer()
 		{
 			Count = 0;
-			Mastery = "";
+			Mastery = "Novice";
 			Country = "";
 			shoots = 0;
             Counter = new TextBlock();

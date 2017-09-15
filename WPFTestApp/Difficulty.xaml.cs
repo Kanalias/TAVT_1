@@ -23,11 +23,29 @@ namespace WPFTestApp
 	/// </summary>
 	public partial class Difficulty : Window
 	{
-		public Difficulty(Archer[] a1)
+        private Archer[] DiffArchers;
+        private int LampChance;
+
+		public Difficulty(Archer[] a1, int ch)
 		{
 			InitializeComponent();
-            Archer[] BackUp = a1;
-		}
+            DiffArchers = a1;
+            LampChance = ch;
+            LoadSettings(DiffArchers, ch);
+        }
+
+        private void LoadSettings(Archer[] a1, int ch)
+        {
+            ComboP1.Text = a1[0].Mastery;
+            ComboP2.Text = a1[1].Mastery;
+            ComboP3.Text = a1[2].Mastery;
+            ComboP4.Text = a1[3].Mastery;
+            ComboP5.Text = a1[4].Mastery;
+            ComboP6.Text = a1[5].Mastery;
+            ComboP7.Text = a1[6].Mastery;
+            ComboP8.Text = a1[7].Mastery;
+            LampSlider.Value = ch;
+        }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -36,6 +54,16 @@ namespace WPFTestApp
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            DiffArchers[0].Mastery = ComboP1.Text;
+            DiffArchers[1].Mastery = ComboP2.Text;
+            DiffArchers[2].Mastery = ComboP3.Text;
+            DiffArchers[3].Mastery = ComboP4.Text;
+            DiffArchers[4].Mastery = ComboP5.Text;
+            DiffArchers[5].Mastery = ComboP6.Text;
+            DiffArchers[6].Mastery = ComboP7.Text;
+            DiffArchers[7].Mastery = ComboP8.Text;
+            LampChance = Convert.ToInt32(LampBox.Text);
+            SavedChance = LampChance;
             this.Close();
         }
 
