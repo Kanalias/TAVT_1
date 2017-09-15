@@ -41,17 +41,45 @@ namespace WPFTestApp
 
         private void LampSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            int value = Convert.ToInt32(Math.Round(LampSlider.Value));
+            LampSlider.Value = value;
+            LampBox.Text = value.ToString();
         }
 
         private void LampBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
+            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
         }
 
         private void LampBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            int value;
+            if (LampBox.Text == "")
+            {
+                value = 0;
+                LampBox.Text = "0";
+            }
+            else
+            {
+                value = int.Parse(LampBox.Text);
 
+                if (value > 100)
+                {
+                    value = 100;
+                    LampBox.Text = "100";
+                }
+                else if (value < 0)
+                {
+                    value = 0;
+                    LampBox.Text = "0";
+                }
+            }
+
+            LampSlider.Value = value;
         }
     }
+    
 }
