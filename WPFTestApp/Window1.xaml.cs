@@ -35,6 +35,7 @@ namespace WPFTestApp
 		{
 			InitializeComponent();
 			InitArchers();
+            GameData.InitColors();
             GameData.chance = 0;
             SpeedText.Text = SpeedSlider.Value.ToString();
 		}
