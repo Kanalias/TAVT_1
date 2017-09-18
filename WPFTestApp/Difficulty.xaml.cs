@@ -24,17 +24,15 @@ namespace WPFTestApp
 	public partial class Difficulty : Window
 	{
         private Archer[] DiffArchers;
-        int LampChance;
 
-		public Difficulty(Archer[] a1, int ch)
+		public Difficulty(Archer[] a1)
 		{
 			InitializeComponent();
             DiffArchers = a1;
-            LampChance = ch;
-            LoadSettings(DiffArchers, ch);
+            LoadSettings(DiffArchers);
         }
 
-        private void LoadSettings(Archer[] a1, int ch)
+        private void LoadSettings(Archer[] a1)
         {
             ComboP1.Text = a1[0].Mastery;
             ComboP2.Text = a1[1].Mastery;
@@ -44,7 +42,8 @@ namespace WPFTestApp
             ComboP6.Text = a1[5].Mastery;
             ComboP7.Text = a1[6].Mastery;
             ComboP8.Text = a1[7].Mastery;
-            LampSlider.Value = ch;
+            LampSlider.Value = GameData.chance;
+            P1.Source = GameData.Flags[1]; 
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -62,7 +61,7 @@ namespace WPFTestApp
             DiffArchers[5].Mastery = ComboP6.Text;
             DiffArchers[6].Mastery = ComboP7.Text;
             DiffArchers[7].Mastery = ComboP8.Text;
-            LampChance = Convert.ToInt32(LampBox.Text);
+            GameData.chance = Convert.ToInt32(LampBox.Text);
             this.Close();
         }
 

@@ -27,7 +27,7 @@ namespace WPFTestApp
 	{
 		private Archer[] Archers =  new Archer[8];
         private bool pause;
-        private int chance;
+        //public static int chance;
 
 
 		
@@ -35,7 +35,8 @@ namespace WPFTestApp
 		{
 			InitializeComponent();
 			InitArchers();
-            chance = 0;
+            GameData.InitColors();
+            GameData.chance = 0;
             SpeedText.Text = SpeedSlider.Value.ToString();
 		}
 		
@@ -76,7 +77,7 @@ namespace WPFTestApp
 		
 		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)
 		{
-			Window Difficulty = new Difficulty(Archers,chance);
+			Window Difficulty = new Difficulty(Archers);
 			Difficulty.ShowDialog();
             
 		}
