@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WPFTestApp
 {
@@ -21,15 +22,17 @@ namespace WPFTestApp
 		public string Mastery;
 		public int shoots;
         public TextBlock Counter;
+        public ImageSource Flag;
 		
-		public Archer()
+		public Archer(int id)
 		{
 			Count = 0;
 			Mastery = "Novice";
-			Country = "";
+			Country = GameData.Flags[id].FlagName;
+            Flag = GameData.Flags[id].FlagPath;
 			shoots = 0;
             Counter = new TextBlock();
-            Counter.Text = "0";
+            Counter.Text = GameData.Flags[id].FlagName;
             Counter.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             Counter.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             //Counter.Height = 30;

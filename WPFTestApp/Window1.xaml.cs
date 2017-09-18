@@ -34,9 +34,9 @@ namespace WPFTestApp
 		public Window1()
 		{
 			InitializeComponent();
-			InitArchers();
             GameData.InitColors();
             GameData.chance = 0;
+            InitArchers();
             SpeedText.Text = SpeedSlider.Value.ToString();
 		}
 		
@@ -44,7 +44,7 @@ namespace WPFTestApp
 		{
 			for(int i = 0; i<8; i++)
 			{
-				Archers[i] = new Archer();
+				Archers[i] = new Archer(i);
                 MyStack.Children.Add(Archers[i].Counter);
 			}
 		}
@@ -87,6 +87,11 @@ namespace WPFTestApp
 		{
             if (StartButton.Content.ToString() == "Start")
             {
+                for (int i=0;i<=7;i++)
+                {
+                    Archers[i].Count = 0;
+                    Archers[i].Counter.Text = "0";
+                }
                 StartButton.Content = "Stop";
                 StartShooting();
             }

@@ -43,14 +43,14 @@ namespace WPFTestApp
             ComboP7.Text = a1[6].Mastery;
             ComboP8.Text = a1[7].Mastery;
             LampSlider.Value = GameData.chance;
-            P1.Source = GameData.Flags[0];
-            P2.Source = GameData.Flags[1];
-            P3.Source = GameData.Flags[2];
-            P4.Source = GameData.Flags[3];
-            P5.Source = GameData.Flags[4];
-            P6.Source = GameData.Flags[5];
-            P7.Source = GameData.Flags[6];
-            P8.Source = GameData.Flags[7];
+            P1.Source = a1[0].Flag;
+            P2.Source = a1[1].Flag;
+            P3.Source = a1[2].Flag;
+            P4.Source = a1[3].Flag;
+            P5.Source = a1[4].Flag;
+            P6.Source = a1[5].Flag;
+            P7.Source = a1[6].Flag;
+            P8.Source = a1[7].Flag;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
