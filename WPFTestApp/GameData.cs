@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Documents;
 
 namespace WPFTestApp
 {
@@ -17,11 +18,7 @@ namespace WPFTestApp
         {
             for (int i = 0;i<=15;i++)
             {
-                BitmapImage bm = new BitmapImage();
-                bm.BeginInit();
-                bm.UriSource = new Uri(@"res\" + (i+1).ToString() + ".jpg");
-                bm.EndInit();
-                Flags[i] = bm;
+                Flags[i] = new BitmapImage(new Uri(@"Images/" + (i+1).ToString() + ".jpg",UriKind.Relative));
             }
         }
     }
