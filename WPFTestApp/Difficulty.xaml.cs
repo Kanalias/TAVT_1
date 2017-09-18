@@ -24,7 +24,7 @@ namespace WPFTestApp
 	public partial class Difficulty : Window
 	{
         private Archer[] DiffArchers;
-        private int LampChance;
+        int LampChance;
 
 		public Difficulty(Archer[] a1, int ch)
 		{
@@ -63,7 +63,6 @@ namespace WPFTestApp
             DiffArchers[6].Mastery = ComboP7.Text;
             DiffArchers[7].Mastery = ComboP8.Text;
             LampChance = Convert.ToInt32(LampBox.Text);
-            SavedChance = LampChance;
             this.Close();
         }
 
