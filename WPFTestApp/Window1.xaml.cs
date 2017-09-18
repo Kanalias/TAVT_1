@@ -45,7 +45,8 @@ namespace WPFTestApp
 			for(int i = 0; i<8; i++)
 			{
 				Archers[i] = new Archer(i);
-                MyStack.Children.Add(Archers[i].Counter);
+                MyStack.Children.Add(Archers[i].VisualCounter);
+                StackCountry.Children.Add(Archers[i].VisualCountry);
 			}
 		}
 
@@ -90,7 +91,8 @@ namespace WPFTestApp
                 for (int i=0;i<=7;i++)
                 {
                     Archers[i].Count = 0;
-                    Archers[i].Counter.Text = "0";
+                    //Archers[i].Counter.Text = "0";
+                    Archers[i].VisualCounter.Content = "0";
                 }
                 StartButton.Content = "Stop";
                 StartShooting();
@@ -102,7 +104,8 @@ namespace WPFTestApp
                 for (int i = 0; i <= 7; i++)
                 {
                     Archers[i].Count = 0;
-                    Archers[i].Counter.Text = "0";
+                    //Archers[i].Counter.Text = "0";
+                    Archers[i].VisualCounter.Content = "0";
                 }
 
             }

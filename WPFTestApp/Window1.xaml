@@ -76,16 +76,17 @@
         </Menu>
         <StackPanel
 			Grid.Row="1"
-			Grid.Column="2">
+			Grid.Column="2"
+            Name="StackCountry">
             <Label Content="Участники"/>
-            <Label Content="Страна 1" Height="30"/>
+            <!--<Label Content="Страна 1" Height="30"/>
             <Label Content="Страна 2" Height="30"/>
             <Label Content="Страна 3" Height="30"/>
             <Label Content="Страна 4" Height="30"/>
             <Label Content="Страна 5" Height="30"/>
             <Label Content="Страна 6" Height="30"/>
             <Label Content="Страна 7" Height="30"/>
-            <Label Content="Страна 8" Height="30"/>
+            <Label Content="Страна 8" Height="30"/>-->
         </StackPanel>
         <Canvas Grid.Row="1" Grid.Column="1" Background="AliceBlue" Name="Canvas1">
             <Ellipse Grid.Column="1" Grid.Row="1" Fill="Black" Name="Point" Width="0" Height="0"/>

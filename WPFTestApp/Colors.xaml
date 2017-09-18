@@ -2,14 +2,185 @@
 <Window
 	x:Class="WPFTestApp.Colors" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="Цвета"
-	Height="300"
-	Width="300">
-	<Grid>
-		<Button
-			VerticalAlignment="Bottom"
-			Height="50"
-			Width="Auto"
-			Content="Exit"
-			Click="ColorsExitButton"/>
-	</Grid>
+	Height="330"
+	Width="300" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Image Name="P1" 
+               Grid.Column="0"
+               Grid.Row="0"
+               Width="50" 
+               Height="25" Margin="10,12.5,90,12.5"/>
+        <Label Content="Страна 1"
+               Grid.Column="0"
+               Grid.Row="0"
+               FontSize="11"
+               Width="80"
+               Height="25" Margin="65,5,5,20" HorizontalContentAlignment="Center"/>
+        <ComboBox Name="ComboP1"
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Width="80"
+                  Height="20" Margin="65,25,5,5"
+                  />
+
+        <Image x:Name="P2" 
+            Grid.Column="1"
+            Grid.Row="0"
+            Width="50" 
+            Height="25" Margin="90,12,10,12"/>
+        <Label Content="Страна 2"
+            Grid.Column="1"
+            Grid.Row="0"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="5,5,65,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP2"
+            Grid.Column="1"
+            Grid.Row="0"
+            Width="80"
+            Height="20" Margin="5,25,65,5"/>
+
+        <Image x:Name="P3" 
+            Grid.Column="0"
+            Grid.Row="1"
+            Width="50" 
+            Height="25" Margin="10,12.5,90,12.5"/>
+        <Label Content="Страна 3"
+            Grid.Column="0"
+            Grid.Row="1"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="65,5,5,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP3"
+            Grid.Column="0"
+            Grid.Row="1"
+            Width="80"
+            Height="20" Margin="65,25,5,5"/>
+
+        <Image x:Name="P4" 
+            Grid.Column="1"
+            Grid.Row="1"
+            Width="50" 
+            Height="25" Margin="90,12,10,12"/>
+        <Label Content="Страна 4"
+            Grid.Column="1"
+            Grid.Row="1"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="5,5,65,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP4"
+            Grid.Column="1"
+            Grid.Row="1"
+            Width="80"
+            Height="20" Margin="5,25,65,5"/>
+
+        <Image x:Name="P5" 
+            Grid.Column="0"
+            Grid.Row="2"
+            Width="50" 
+            Height="25" Margin="10,12.5,90,12.5"/>
+        <Label Content="Страна 5"
+            Grid.Column="0"
+            Grid.Row="2"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="65,5,5,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP5"
+            Grid.Column="0"
+            Grid.Row="2"
+            Width="80"
+            Height="20" Margin="65,25,5,5"/>
+
+        <Image x:Name="P6" 
+            Grid.Column="1"
+            Grid.Row="2"
+            Width="50" 
+            Height="25" Margin="90,12,10,12"/>
+        <Label Content="Страна 6"
+            Grid.Column="1"
+            Grid.Row="2"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="5,5,65,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP6"
+            Grid.Column="1"
+            Grid.Row="2"
+            Width="80"
+            Height="20" Margin="5,25,65,5"/>
+
+        <Image x:Name="P7" 
+            Grid.Column="0"
+            Grid.Row="3"
+            Width="50" 
+            Height="25" Margin="10,12.5,90,12.5"/>
+        <Label Content="Страна 7"
+            Grid.Column="0"
+            Grid.Row="3"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="65,5,5,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP7"
+            Grid.Column="0"
+            Grid.Row="3"
+            Width="80"
+            Height="20" Margin="65,25,5,5"/>
+
+        <Image x:Name="P8" 
+            Grid.Column="1"
+            Grid.Row="3"
+            Width="50" 
+            Height="25" Margin="90,12,10,12"/>
+        <Label Content="Страна 8"
+            Grid.Column="1"
+            Grid.Row="3"
+            FontSize="11"
+            Width="80"
+            Height="25" Margin="5,5,65,20" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ComboP8"
+            Grid.Column="1"
+            Grid.Row="3"
+            Width="80"
+            Height="20" Margin="5,25,65,5"/>
+
+
+        <Button
+			VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+			Height="20"
+            Width="75"
+            Grid.Row="4"
+            Grid.Column="0"
+		    x:Name="CancelBtn"
+            Click="CancelBtn_Click"
+            Content="Cancel"/>
+        <Button VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center" 
+                Height="20" Width="75" 
+                Content="OK" 
+                x:Name="OKBtn" 
+                Click="OKBtn_Click" 
+                Grid.Column="1" 
+                Grid.Row="4"/>
+        <Button Name="RandomBtn"
+                Click="RandomBtn_Click"
+                Grid.ColumnSpan="2"
+                Grid.Row="5"
+                Content="Random Colors"
+                />
+
+
+    </Grid>
 </Window>

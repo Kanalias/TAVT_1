@@ -21,8 +21,10 @@ namespace WPFTestApp
 		public int Count;
 		public string Mastery;
 		public int shoots;
-        public TextBlock Counter;
+        //public TextBlock Counter;
+        public Label VisualCounter;
         public ImageSource Flag;
+        public Label VisualCountry;
 		
 		public Archer(int id)
 		{
@@ -31,12 +33,16 @@ namespace WPFTestApp
 			Country = GameData.Flags[id].FlagName;
             Flag = GameData.Flags[id].FlagPath;
 			shoots = 0;
-            Counter = new TextBlock();
-            Counter.Text = GameData.Flags[id].FlagName;
-            Counter.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            Counter.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            VisualCounter = new Label();
+            VisualCounter.Content = Count.ToString();
+            //Counter = new TextBlock();
+            //Counter.Text = "0";
+            //Counter.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            //Counter.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             //Counter.Height = 30;
-            Counter.Margin = new System.Windows.Thickness(5, 0, 30, 14.5);
+            //Counter.Margin = new System.Windows.Thickness(5, 0, 30, 14.5);
+            VisualCountry = new Label();
+            VisualCountry.Content = Country;
 		}
 		
 	}
