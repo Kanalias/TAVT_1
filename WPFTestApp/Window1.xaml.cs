@@ -73,7 +73,7 @@ namespace WPFTestApp
 		private void ColorsButtonClick(object sender, RoutedEventArgs e)
 		{
 			Window Color = new Colors(Archers);
-			Color.Show();
+			Color.ShowDialog();
 		}
 		
 		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)

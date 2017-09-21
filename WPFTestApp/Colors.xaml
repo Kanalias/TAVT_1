@@ -34,6 +34,8 @@
                   Grid.Row="0"
                   Width="80"
                   Height="20" Margin="65,25,5,5"
+                  Tag="0"
+                  DropDownOpened="SomeContextMenuOpening"
                   />
 
         <Image x:Name="P2" 
@@ -51,7 +53,10 @@
             Grid.Column="1"
             Grid.Row="0"
             Width="80"
-            Height="20" Margin="5,25,65,5"/>
+            Height="20" 
+            Margin="5,25,65,5"
+                  Tag="1"
+                  DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P3" 
             Grid.Column="0"
@@ -68,7 +73,9 @@
             Grid.Column="0"
             Grid.Row="1"
             Width="80"
-            Height="20" Margin="65,25,5,5"/>
+            Height="20" Margin="65,25,5,5"
+                  Tag="2"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P4" 
             Grid.Column="1"
@@ -85,7 +92,9 @@
             Grid.Column="1"
             Grid.Row="1"
             Width="80"
-            Height="20" Margin="5,25,65,5"/>
+            Height="20" Margin="5,25,65,5"
+                  Tag="3"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P5" 
             Grid.Column="0"
@@ -102,7 +111,9 @@
             Grid.Column="0"
             Grid.Row="2"
             Width="80"
-            Height="20" Margin="65,25,5,5"/>
+            Height="20" Margin="65,25,5,5"
+                  Tag="4"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P6" 
             Grid.Column="1"
@@ -119,7 +130,9 @@
             Grid.Column="1"
             Grid.Row="2"
             Width="80"
-            Height="20" Margin="5,25,65,5"/>
+            Height="20" Margin="5,25,65,5"
+                  Tag="5"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P7" 
             Grid.Column="0"
@@ -136,7 +149,9 @@
             Grid.Column="0"
             Grid.Row="3"
             Width="80"
-            Height="20" Margin="65,25,5,5"/>
+            Height="20" Margin="65,25,5,5"
+                  Tag="6"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Image x:Name="P8" 
             Grid.Column="1"
@@ -153,8 +168,9 @@
             Grid.Column="1"
             Grid.Row="3"
             Width="80"
-            Height="20" Margin="5,25,65,5"/>
-
+            Height="20" Margin="5,25,65,5"
+                  Tag="7"
+            DropDownOpened="SomeContextMenuOpening"/>
 
         <Button
 			VerticalContentAlignment="Center"

@@ -24,11 +24,17 @@ namespace WPFTestApp
 
         public static void InitColors()
         {
+
             StreamReader sr = new StreamReader(@"Images/ReadMe.txt");
             for (int i = 0;i<=15;i++)
             {
                 Flags[i].FlagPath = new BitmapImage(new Uri(@"Images/" + (i+1).ToString() + ".jpg",UriKind.Relative));
                 Flags[i].FlagName = sr.ReadLine();
+                Flags[i].IsFree = true;
+            }
+
+            for (int i = 0; i<=7; i++)
+            {
                 Flags[i].IsFree = false;
             }
         }

@@ -25,6 +25,7 @@ namespace WPFTestApp
         public Label VisualCounter;
         public ImageSource Flag;
         public Label VisualCountry;
+        public int Flag_id;
 		
 		public Archer(int id)
 		{
@@ -32,6 +33,7 @@ namespace WPFTestApp
 			Mastery = "Novice";
 			Country = GameData.Flags[id].FlagName;
             Flag = GameData.Flags[id].FlagPath;
+            Flag_id = id;
 			shoots = 0;
             VisualCounter = new Label();
             VisualCounter.Content = Count.ToString();
