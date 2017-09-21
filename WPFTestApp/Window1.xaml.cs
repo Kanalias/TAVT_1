@@ -74,7 +74,11 @@ namespace WPFTestApp
 		{
 			Window Color = new Colors(Archers);
 			Color.ShowDialog();
-		}
+            for (int i = 0; i <= 7; i++)
+            {
+                Archers[i].VisualCountry.Content = Archers[i].Country;
+            }
+        }
 		
 		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)
 		{

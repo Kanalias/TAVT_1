@@ -67,6 +67,7 @@ namespace WPFTestApp
             {
                 EnterArray[i] = DiffArchers[i].Flag_id;
             }
+            EndArr = EnterArray;
         }
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -137,6 +138,23 @@ namespace WPFTestApp
             }
             Combo.Items.Refresh();
         }
-        
+
+        private void ChangeCountry(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox Combo = sender as ComboBox;
+            int Item = Convert.ToInt32(Combo.Tag);
+            if (Combo.SelectedIndex == -1)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                int selected = RandomArray[Combo.SelectedIndex];
+                GameData.Flags[EndArr[Item]].IsFree = true;
+                FLagLinks[Item].Source = GameData.Flags[selected].FlagPath;
+                EndArr[Item] = selected;
+                GameData.Flags[selected].IsFree = false;
+            }
+        }
     }
 }
