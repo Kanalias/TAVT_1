@@ -143,7 +143,7 @@
 			x:Name="SpeedText"
 			Grid.Column="1"
 			Grid.Row="3"
-			HorizontalAlignment="Left"
+            HorizontalContentAlignment="Center"
 			VerticalAlignment="Bottom"
 			Margin="230,0,0,12.5"
 			TextChanged="SpeedText_TextChanged" />

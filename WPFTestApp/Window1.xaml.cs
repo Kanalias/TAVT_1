@@ -173,7 +173,7 @@ namespace WPFTestApp
 		{
 			
 			int value;
-			if (SpeedText.Text == "")
+			if (SpeedText.Text == "" | SpeedText.Text == " 0" | SpeedText.Text == " ")
 			{
 				value = 0;
 				SpeedText.Text = "0";

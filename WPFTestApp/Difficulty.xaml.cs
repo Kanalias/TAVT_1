@@ -90,7 +90,7 @@ namespace WPFTestApp
         private void LampBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int value;
-            if (LampBox.Text == "")
+            if (LampBox.Text == "" | LampBox.Text == " 0" | LampBox.Text == " ")
             {
                 value = 0;
                 LampBox.Text = "0";
