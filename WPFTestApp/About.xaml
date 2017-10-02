@@ -1,0 +1,29 @@
+﻿<Window x:Class="WPFTestApp.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFTestApp"
+        mc:Ignorable="d"
+        Title="About" Height="205" Width="300" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Content="Close" Name="Exit" Click="Exit_Click" Margin="0,0,0,-4"/>
+        <RichTextBox Grid.Row="0" IsDocumentEnabled="True" IsReadOnly="True" AutoWordSelection="False">
+            <FlowDocument>
+                <Paragraph TextAlignment="Center">
+                    <Run FontSize="16" Text="Автомат разработал студент группы ИВТ-22 Жолобов Никита"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run/>
+                </Paragraph>
+                <Paragraph TextAlignment="Center">
+                    <Run FontSize="16" Text="Киров, 2017 год"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>

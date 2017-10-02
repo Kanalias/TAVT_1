@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace WPFTestApp
 {
@@ -27,6 +28,10 @@ namespace WPFTestApp
 	{
 		private Archer[] Archers =  new Archer[8];
         private bool pause;
+        private DispatcherTimer timer;
+        private int currentArcher;
+        private Boolean GameIsOver;
+        private const double deg = 0.0174533;
         //public static int chance;
 
 
@@ -38,7 +43,11 @@ namespace WPFTestApp
             GameData.chance = 0;
             InitArchers();
             SpeedText.Text = SpeedSlider.Value.ToString();
-		}
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500 + SpeedSlider.Value * 10);
+            timer.IsEnabled = false;
+            timer.Tick += Timer_Tick;
+        }
 		
 		private void InitArchers()
 		{
@@ -52,17 +61,73 @@ namespace WPFTestApp
 
         private void StartShooting()
         {
-            
+            currentArcher = 0;
+            pause = false;
+            timer.Start();
+            Settings.IsEnabled = false;
+            timer.IsEnabled = true;
+            GameIsOver = false;
         }
-	
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (currentArcher == 0 && Archers[currentArcher].shoots == GameData.Shoots)
+            {
+                int max = Archers[0].Count;
+                int indmax = 0;
+                for (int i = 0; i<=7;i++)
+                {
+                    if(Archers[i].Count>max)
+                    {
+                        max = Archers[i].Count;
+                        indmax = i;
+                    }
+                }
+                MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
+                StopShooting();
+            }
+            else if (pause == false)
+                {
+                    if (Archers[currentArcher].shoots != GameData.Shoots)
+                    {
+                        Shoot(currentArcher);
+                        Archers[currentArcher].shoots++;
+                        if (currentArcher == 7)
+                        {
+                            currentArcher = 0;
+                        }
+                        else
+                        {
+                            currentArcher++;
+                        }
+                    }
+                }
+            //throw new NotImplementedException();
+        }
+
         private void StopShooting()
         {
-
+            timer.IsEnabled = false;
+            //for (int i = 0; i <= 7; i++)
+            //{
+            //    Archers[i].Count = 0;
+            //    Archers[i].VisualCounter.Content = "0";
+            //    Archers[i].shoots = 0;
+            //}
+            currentArcher = 0;
+            Settings.IsEnabled = true;
+            GameIsOver = true;
+            Point.Width = 0;
+            Point.Height = 0;
         }
 
         private void PauseShooting()
         {
-
+            if (!GameIsOver)
+            {
+                pause = !pause;
+                timer.IsEnabled = !timer.IsEnabled;
+            }
         }
 
 		private void ExitButtonClick(object sender, RoutedEventArgs e)
@@ -92,11 +157,12 @@ namespace WPFTestApp
 		{
             if (StartButton.Content.ToString() == "Start")
             {
-                for (int i=0;i<=7;i++)
+                for (int i = 0; i <= 7; i++)
                 {
                     Archers[i].Count = 0;
                     //Archers[i].Counter.Text = "0";
                     Archers[i].VisualCounter.Content = "0";
+                    Archers[i].shoots = 0;
                 }
                 StartButton.Content = "Stop";
                 StartShooting();
@@ -104,40 +170,60 @@ namespace WPFTestApp
             else
             {
                 StartButton.Content = "Start";
-                StopShooting();
                 for (int i = 0; i <= 7; i++)
                 {
                     Archers[i].Count = 0;
-                    //Archers[i].Counter.Text = "0";
                     Archers[i].VisualCounter.Content = "0";
+                    Archers[i].shoots = 0;
                 }
-
+                StopShooting();
             }
 
         }
 
-        /*private void Shoot()    //Метод Shoot прогоняет 10 выстрелов
+        private void Shoot(int archer)    //Метод Shoot прогоняет 10 выстрелов
         {
-            for (int i = 1; i<=1; i++)
-            {
-                for (int j = 0;j<=3;j++)
-                {
                     int range = 0;
                     int grad = 0;
                     int xc = 165;
                     int yc = 165;
                     Random rnd = new Random();
+            Point.Height = 4;
+            Point.Width = 4;
+            switch (Archers[archer].Mastery)
+            {
+                case "Novice":
                     range = rnd.Next(0, 165);
-                    grad = rnd.Next(0, 360);
-                    Point.Width = 4;
-                    Point.Height = 4;
-                    Point.Margin = new Thickness(xc + Math.Cos(grad)*range -2 ,yc - Math.Sin(grad)*range - 2,xc - Math.Cos(grad)*range - 2,yc + Math.Sin(grad)*range - 2);
-                    Archers[j].Count += Math.Abs(range/15 - 10);
-                    Archers[j].Counter.Text = Archers[j].Count.ToString();
-                }
-                MessageBox.Show("End of competition");
+                    break;
+                case "Master":
+                    range = rnd.Next(0, 135);
+                    break;
+                case "Champion":
+                    range = rnd.Next(0, 105);
+                    break;
             }
-        }*/
+            grad = rnd.Next(0, 360);
+            bool lamp = rnd.Next(0, 100000000) <= GameData.chance * 1000000;
+            if (lamp)
+            {
+                int lampgrad = rnd.Next(0, 360);
+                int lamprange = rnd.Next(0, 30);
+                LampLabel.Content = "Lamp Activated";
+                int xLeft = (int)Math.Round(xc + Math.Cos(grad*deg) * range + Math.Cos(lampgrad*deg) * lamprange);
+                int xRight = (int)Math.Round(xc - Math.Cos(grad*deg) * range - Math.Cos(lampgrad*deg) * lamprange);
+                int yUp = (int)Math.Round(yc - Math.Sin(grad*deg) * range - Math.Sin(lampgrad*deg) * lamprange);
+                int yLow = (int)Math.Round(yc + Math.Sin(grad*deg) * range + Math.Sin(lampgrad*deg) * lamprange);
+                Point.Margin = new Thickness(xLeft-2, yUp-2, xRight-2, yLow-2);
+                int newrange = (int)Math.Round(Math.Sqrt(Math.Pow(xLeft-xc, 2) + Math.Pow(yUp-yc, 2)));
+                Archers[archer].Count += Math.Abs(newrange / 15 - 10);
+            }
+            else
+            {
+                Point.Margin = new Thickness(xc + Math.Cos(grad) * range - 2, yc - Math.Sin(grad) * range - 2, xc - Math.Cos(grad) * range - 2, yc + Math.Sin(grad) * range - 2);
+                Archers[archer].Count += Math.Abs(range / 15 - 10);
+            }
+            Archers[archer].VisualCounter.Content = Archers[archer].Count.ToString();
+        }
 
 		void PauseButonCLick(object sender, RoutedEventArgs e)
 		{
@@ -149,6 +235,7 @@ namespace WPFTestApp
             else
             {
                 PauseButton.Content = "Pause";
+                PauseShooting();
             }
 		}
 		void window1_Loaded(object sender, RoutedEventArgs e)
@@ -160,6 +247,7 @@ namespace WPFTestApp
 			int value = Convert.ToInt32(Math.Round(SpeedSlider.Value));
 			SpeedSlider.Value = value;
 			SpeedText.Text = value.ToString();
+            timer.Interval = TimeSpan.FromMilliseconds(500 + Convert.ToInt32(SpeedSlider.Value)*10);
 		}
 		
 		void SpeedText_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -196,7 +284,19 @@ namespace WPFTestApp
 	
 			SpeedSlider.Value = value;
 		}
-	}
+
+        private void RulesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window rules = new Rules();
+            rules.ShowDialog();
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            Window About = new About();
+            About.ShowDialog();
+        }
+    }
 
 
 	

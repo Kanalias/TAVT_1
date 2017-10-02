@@ -57,7 +57,8 @@
             </MenuItem>
             <MenuItem
 				Header="Настройки"
-				Grid.Row="0">
+				Grid.Row="0"
+                Name="Settings">
                 <MenuItem
 					Header="Выбор стран"
 					Click="ColorsButtonClick" />
@@ -69,9 +70,13 @@
 				Header="Помощь"
 				Grid.Row="0">
                 <MenuItem
-					Header="Правила" />
+					Header="Правила"
+                    Name="RulesBtn"
+                    Click="RulesBtn_Click"/>
                 <MenuItem
-					Header="Об авторе" />
+					Header="Об авторе"
+                    Name="About"
+                    Click="About_Click"/>
             </MenuItem>
         </Menu>
         <StackPanel
@@ -92,6 +97,8 @@
             <Ellipse Grid.Column="1" Grid.Row="1" Fill="Black" Name="Point" Width="0" Height="0"/>
         </Canvas>
 
+        <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Width="120" Height="30"  Content="Информация" Margin="0,30,0,270"/>
+        <Label Name="LampLabel" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Width="120" Height="30" Content="" Margin="97,65,97,235"/>
         <Button x:Name="StartButton"
 			Click="StartButtonClick"
 			ClickMode="Press"
@@ -128,7 +135,7 @@
 			Grid.Row="3"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Center"
-			Margin="15,20,0,0" />
+			Margin="15,20,0,0" IsDirectionReversed="True" />
         <Label
 			Content="Скорость"
 			Grid.Column="1"

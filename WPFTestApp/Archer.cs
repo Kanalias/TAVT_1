@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -26,6 +27,7 @@ namespace WPFTestApp
         public ImageSource Flag;
         public Label VisualCountry;
         public int Flag_id;
+        public int[] PointsHistory;
 		
 		public Archer(int id)
 		{

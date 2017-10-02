@@ -13,6 +13,7 @@ namespace WPFTestApp
     static class GameData
     {
         public static int chance;
+        public static int Shoots = 10;
         public struct Flag
         {
             public ImageSource FlagPath;
