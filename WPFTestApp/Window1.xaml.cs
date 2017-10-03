@@ -32,6 +32,7 @@ namespace WPFTestApp
         private int currentArcher;
         private Boolean GameIsOver;
         private const double deg = 0.0174533;
+        private const int delay = 10;
         //public static int chance;
 
 
@@ -44,7 +45,7 @@ namespace WPFTestApp
             InitArchers();
             SpeedText.Text = SpeedSlider.Value.ToString();
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500 + SpeedSlider.Value * 10);
+            timer.Interval = TimeSpan.FromMilliseconds(delay + SpeedSlider.Value * 10);
             timer.IsEnabled = false;
             timer.Tick += Timer_Tick;
         }
@@ -83,7 +84,9 @@ namespace WPFTestApp
                         indmax = i;
                     }
                 }
-                MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
+                Window Results = new Results(Archers);
+                Results.ShowDialog();
+                //MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
                 StopShooting();
             }
             else if (pause == false)
@@ -108,12 +111,10 @@ namespace WPFTestApp
         private void StopShooting()
         {
             timer.IsEnabled = false;
-            //for (int i = 0; i <= 7; i++)
-            //{
-            //    Archers[i].Count = 0;
-            //    Archers[i].VisualCounter.Content = "0";
-            //    Archers[i].shoots = 0;
-            //}
+            for (int i = 0; i<=7; i++)
+            {
+                Archers[i].PointsList.Clear();
+            }
             currentArcher = 0;
             Settings.IsEnabled = true;
             GameIsOver = true;
@@ -187,6 +188,7 @@ namespace WPFTestApp
                     int grad = 0;
                     int xc = 165;
                     int yc = 165;
+            int pts = 0;
                     Random rnd = new Random();
             Point.Height = 4;
             Point.Width = 4;
@@ -215,14 +217,17 @@ namespace WPFTestApp
                 int yLow = (int)Math.Round(yc + Math.Sin(grad*deg) * range + Math.Sin(lampgrad*deg) * lamprange);
                 Point.Margin = new Thickness(xLeft-2, yUp-2, xRight-2, yLow-2);
                 int newrange = (int)Math.Round(Math.Sqrt(Math.Pow(xLeft-xc, 2) + Math.Pow(yUp-yc, 2)));
-                Archers[archer].Count += Math.Abs(newrange / 15 - 10);
+                pts = Math.Abs(newrange / 15 - 10);
+                Archers[archer].Count += pts;
             }
             else
             {
-                Point.Margin = new Thickness(xc + Math.Cos(grad) * range - 2, yc - Math.Sin(grad) * range - 2, xc - Math.Cos(grad) * range - 2, yc + Math.Sin(grad) * range - 2);
-                Archers[archer].Count += Math.Abs(range / 15 - 10);
+                Point.Margin = new Thickness(xc + Math.Cos(grad*deg) * range - 2, yc - Math.Sin(grad*deg) * range - 2, xc - Math.Cos(grad*deg) * range - 2, yc + Math.Sin(grad*deg) * range - 2);
+                pts = Math.Abs(range / 15 - 10);
+                Archers[archer].Count += pts;
             }
             Archers[archer].VisualCounter.Content = Archers[archer].Count.ToString();
+            Archers[archer].PointsList.Add(pts);
         }
 
 		void PauseButonCLick(object sender, RoutedEventArgs e)
@@ -247,7 +252,7 @@ namespace WPFTestApp
 			int value = Convert.ToInt32(Math.Round(SpeedSlider.Value));
 			SpeedSlider.Value = value;
 			SpeedText.Text = value.ToString();
-            timer.Interval = TimeSpan.FromMilliseconds(500 + Convert.ToInt32(SpeedSlider.Value)*10);
+            timer.Interval = TimeSpan.FromMilliseconds(delay + Convert.ToInt32(SpeedSlider.Value)*10);
 		}
 		
 		void SpeedText_PreviewTextInput(object sender, TextCompositionEventArgs e)

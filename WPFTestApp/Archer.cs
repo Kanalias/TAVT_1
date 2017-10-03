@@ -10,6 +10,7 @@ using System;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace WPFTestApp
 {
@@ -27,7 +28,7 @@ namespace WPFTestApp
         public ImageSource Flag;
         public Label VisualCountry;
         public int Flag_id;
-        public int[] PointsHistory;
+        public List<int> PointsList;
 		
 		public Archer(int id)
 		{
@@ -39,6 +40,7 @@ namespace WPFTestApp
 			shoots = 0;
             VisualCounter = new Label();
             VisualCounter.Content = Count.ToString();
+            PointsList = new List<int>();
             //Counter = new TextBlock();
             //Counter.Text = "0";
             //Counter.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
