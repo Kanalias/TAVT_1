@@ -23,55 +23,139 @@ namespace WPFTestApp
         {
             public int count;
             public int place;
-            public bool 
+            public bool Shoot;
+            public string reason;
         }
 
         private string winner;
-        private List<int> winners;
+        private List<int> winners = new List<int>();
 
         Player[] player = new Player[8];
 
         public Results(Archer[] archers)
         {
             InitializeComponent();
+            for (int i = 0; i<8;i++)
+            {
+                player[i].count = archers[i].Count;
+            }
             FindWinners(archers);
             DisplayResults(archers);
         }
 
         private void FindWinners(Archer[] archers)
         {
-            int i;
-            for (i = 0 ; i <= 7 ; i++ )
+            int currentPlace = 1;
+            for (int i = 0; i<8; i++)
             {
-                player[i].count = archers[i].Count;
+                player[i].place = 0;
             }
-            for (i = 1; i<=8; i++)
+            while (currentPlace <= 8)
             {
-                int index = Findmax();
-                player[index].place = i;
+                winners.Clear();
+                Findmax();
+                if (winners.Count == 1)
+                {
+                    player[winners[0]].place = currentPlace++;
+                    player[winners[0]].reason = "Score";
+                }
+                else
+                {
+                    for (int i = 0; i<8;i++)
+                    {
+                        player[i].Shoot = false;
+                    }
+                    int currentscore = 10; //Устанавливаем значение для просмотра по счету в 10
+                    if (winners.Count == 2) //Случай если у нас всего 2 игрока с одним набором очков
+                    {
+                        int first = winners[0];
+                        int second = winners[1];
+                        /*int p1 = archers[first].PointsList.Max();
+                        int p2 = archers[second].PointsList.Max();
+                        if (p1 > p2) //Если максимум первого больше второго
+                        {
+                            player[first].place = currentPlace++;
+                            player[second].place = currentPlace++;
+                            player[first].reason = "MaxShoot";
+                            player[second].reason = "MaxShoot";
+                        }
+                        else if (p1 < p2) //наоброт
+                        {
+                            player[second].place = currentPlace++;
+                            player[first].place = currentPlace++;
+                            player[first].reason = "MaxShoot";
+                            player[second].reason = "MaxShoot";
+                        }
+                        else*/
+                            //{
+                            while (currentscore > 0) //Пойдем от самого верха спускать уровень и смотреть.
+                            {
+                                player[first].Shoot = archers[first].PointsList.IndexOf(currentscore) != -1;
+                                player[second].Shoot = archers[second].PointsList.IndexOf(currentscore) != -1;
+                                if (player[first].Shoot ^ player[second].Shoot)
+                                {
+                                    if (player[first].Shoot)
+                                    {
+                                        player[first].place = currentPlace++;
+                                        currentscore = 0;
+                                        player[first].reason = "Max";
+                                        player[second].place = currentPlace++;
+                                        player[second].reason = "Min";
+                                    }
+                                    else
+                                    {
+                                        player[second].place = currentPlace++;
+                                        currentscore = 0;
+                                        player[second].reason = "Max";
+                                        player[first].place = currentPlace++;
+                                        player[first].reason = "Min";
+                                    }
+                                }
+                                else currentscore--;
+                            }
+                            if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
+                            {
+                                player[first].place = currentPlace;
+                                player[first].reason = "Identive";
+                                player[second].place = currentPlace;
+                                player[first].reason = "Identive";
+                                currentPlace += 2;
+                            }
+
+                        //}
+
+                    }
+                    else if (winners.Count >= 3)
+                    {
+                        MessageBox.Show("Wait");
+                        currentPlace = 9;
+                    }
+                }
             }
-            i = 0;
-            while (player[i].place != 1)
-            {
-                i++;
-            }
-            winner = archers[i].Country;
+
         }
 
-        private int Findmax()
+        private void Findmax()
         {
             int max = player[0].count;
-            int maxind = 0;
+            winners.Add(0);
             for (int i = 1; i<=7;i++)
             {
                 if (player[i].count > max)
                 {
                     max = player[i].count;
-                    maxind = i;
+                    winners.Clear();
+                    winners.Add(i);
+                }
+                else if (player[i].count == max)
+                {
+                    winners.Add(i);
                 }
             }
-            player[maxind].count = 0;
-            return maxind;
+            for (int i = 0; i< winners.Count;i++)
+            {
+                player[winners[i]].count = 0;
+            }
         }
 
 
@@ -92,6 +176,7 @@ namespace WPFTestApp
             Part1Img.Source = archer[i].Flag;
             Part1ListPts.ItemsSource = archer[i].PointsList;
             Part1Place.Content = player[i].place;
+            Part1Reason.Content = player[i].reason;
             i++;
             //Second
             Part2Country.Content = archer[i].Country;
@@ -99,6 +184,7 @@ namespace WPFTestApp
             Part2Img.Source = archer[i].Flag;
             Part2ListPts.ItemsSource = archer[i].PointsList;
             Part2Place.Content = player[i].place;
+            Part2Reason.Content = player[i].reason;
             i++;
             //Third
             Part3Country.Content = archer[i].Country;
@@ -106,6 +192,7 @@ namespace WPFTestApp
             Part3Img.Source = archer[i].Flag;
             Part3ListPts.ItemsSource = archer[i].PointsList;
             Part3Place.Content = player[i].place;
+            Part3Reason.Content = player[i].reason;
             i++;
             //Forth
             Part4Country.Content = archer[i].Country;
@@ -113,6 +200,7 @@ namespace WPFTestApp
             Part4Img.Source = archer[i].Flag;
             Part4ListPts.ItemsSource = archer[i].PointsList;
             Part4Place.Content = player[i].place;
+            Part4Reason.Content = player[i].reason;
             i++;
             //Fifth
             Part5Country.Content = archer[i].Country;
@@ -120,6 +208,7 @@ namespace WPFTestApp
             Part5Img.Source = archer[i].Flag;
             Part5ListPts.ItemsSource = archer[i].PointsList;
             Part5Place.Content = player[i].place;
+            Part5Reason.Content = player[i].reason;
             i++;
             //Sixth
             Part6Country.Content = archer[i].Country;
@@ -127,6 +216,7 @@ namespace WPFTestApp
             Part6Img.Source = archer[i].Flag;
             Part6ListPts.ItemsSource = archer[i].PointsList;
             Part6Place.Content = player[i].place;
+            Part6Reason.Content = player[i].reason;
             i++;
             //Seventh
             Part7Country.Content = archer[i].Country;
@@ -134,6 +224,7 @@ namespace WPFTestApp
             Part7Img.Source = archer[i].Flag;
             Part7ListPts.ItemsSource = archer[i].PointsList;
             Part7Place.Content = player[i].place;
+            Part7Reason.Content = player[i].reason;
             i++;
             //Eighth
             Part8Country.Content = archer[i].Country;
@@ -141,8 +232,16 @@ namespace WPFTestApp
             Part8Img.Source = archer[i].Flag;
             Part8ListPts.ItemsSource = archer[i].PointsList;
             Part8Place.Content = player[i].place;
+            Part8Reason.Content = player[i].reason;
 
             //Winner field
+            i = 0;
+            while (winner == null)
+            {
+
+                if (player[i].place == 1) winner = archer[i].Country;
+                else i++;
+            }
             Winner.Content = "Winner is: " + winner;
         }
 

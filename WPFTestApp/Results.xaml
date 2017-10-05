@@ -98,7 +98,7 @@
             <Label Name="Part8Place" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"/>
             <Label Name="Part8Reason" HorizontalContentAlignment="Center"/>
         </StackPanel>
-        <Label Name="Winner" HorizontalContentAlignment="Center" FontSize="20" FontWeight="ExtraBold" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="2" Foreground="OrangeRed"/>
+        <Label Name="Winner" HorizontalContentAlignment="Center" FontSize="20" FontWeight="ExtraBold" Grid.Row="2" Foreground="OrangeRed" Grid.Column="3" Grid.ColumnSpan="4"/>
         <Button Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="3" Name="Close" Click="Close_Click" Content="Close"/>
     </Grid>
 </Window>
