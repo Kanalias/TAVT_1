@@ -23,9 +23,11 @@ namespace WPFTestApp
         {
             public int count;
             public int place;
+            public bool 
         }
 
         private string winner;
+        private List<int> winners;
 
         Player[] player = new Player[8];
 

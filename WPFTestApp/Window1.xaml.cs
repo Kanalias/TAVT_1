@@ -32,7 +32,7 @@ namespace WPFTestApp
         private int currentArcher;
         private Boolean GameIsOver;
         private const double deg = 0.0174533;
-        private const int delay = 10;
+        private const int delay = 1;
         //public static int chance;
 
 
@@ -91,6 +91,11 @@ namespace WPFTestApp
             }
             else if (pause == false)
                 {
+                PartFlag.Source = Archers[currentArcher].Flag;
+                PartName.Content = Archers[currentArcher].Country;
+                PartCount.Content = "Счет: " + Archers[currentArcher].Count;
+                PartMastery.Content = Archers[currentArcher].Mastery;
+                LampLabel.Content = "";
                     if (Archers[currentArcher].shoots != GameData.Shoots)
                     {
                         Shoot(currentArcher);
@@ -228,6 +233,7 @@ namespace WPFTestApp
             }
             Archers[archer].VisualCounter.Content = Archers[archer].Count.ToString();
             Archers[archer].PointsList.Add(pts);
+            PartPts.Content = pts.ToString();
         }
 
 		void PauseButonCLick(object sender, RoutedEventArgs e)

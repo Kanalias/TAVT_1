@@ -26,8 +26,7 @@
 				Height="50" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition
-				Width="200*" />
+            <ColumnDefinition Width="314" />
             <ColumnDefinition
 				Width="330" />
             <ColumnDefinition
@@ -98,7 +97,15 @@
         </Canvas>
 
         <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Width="120" Height="30"  Content="Информация" Margin="0,30,0,270"/>
-        <Label Name="LampLabel" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Width="120" Height="30" Content="" Margin="97,65,97,235"/>
+        <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Width="120" Height="30" Content="Участник" Margin="97,65,97,235"/>
+        <Image Name="PartFlag" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="50" Height="25" RenderTransformOrigin="1.3,2.5" Margin="132,100,132,205"/>
+        <Label Name="PartName" HorizontalContentAlignment="Center" Grid.Column="0" Grid.Row="1" Width="120" Height="30" Margin="97,130,97,170"/>
+        <Label Name="PartCount" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" Width="120" Height="30" FontSize="16" FontWeight="Bold" Margin="97,165,97,135"/>
+        <Label Name="PartMastery" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" Width="120" Height="30" Margin="97,200,97,100"/>
+        <Label Name="PartPts" Grid.Row="1" Grid.Column="0" Width="120" Height="30" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+
+
+        <Label Name="LampLabel" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" Width="120" Height="30" Content="" Margin="105,21,105,120"/>
         <Button x:Name="StartButton"
 			Click="StartButtonClick"
 			ClickMode="Press"
@@ -165,5 +172,6 @@
         <Ellipse Grid.Column="1" Grid.Row="1" Stroke="Red"  Margin="120,120"/>
         <Ellipse Grid.Column="1" Grid.Row="1" Stroke="Blue" Margin="135,135"/>
         <Ellipse Grid.Column="1" Grid.Row="1" Stroke="Red"  Margin="150,150"/>
+       
     </Grid>
 </Window>
