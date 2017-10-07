@@ -45,7 +45,7 @@ namespace WPFTestApp
 
         private void FindWinners(Archer[] archers)
         {
-            int currentPlace = 1;
+            int currentPlace = 1;   //Текущее выдаваемое место
             for (int i = 0; i<8; i++)
             {
                 player[i].place = 0;
@@ -53,7 +53,7 @@ namespace WPFTestApp
             while (currentPlace <= 8)
             {
                 winners.Clear();
-                Findmax();
+                Findmax();      //Заполняем коллекцию победителей лучниками с наибольшим текущим счетом
                 if (winners.Count == 1)
                 {
                     player[winners[0]].place = currentPlace++;
@@ -109,7 +109,7 @@ namespace WPFTestApp
                     else if (winners.Count == 3)
                     {
                         int currentscore = 10;
-                        while (winners.Count == 3)
+                        while (winners.Count == 3)  //В случае с тремя сначала отсекаем одного, после повторяем поиск как для двух
                         {
                             int trueCount = 0;
                             int falseCount = 0;

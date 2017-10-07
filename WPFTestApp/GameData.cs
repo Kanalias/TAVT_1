@@ -34,10 +34,10 @@ namespace WPFTestApp
                 Flags[i].IsFree = true;
             }
 
-            for (int i = 0; i<=7; i++)
-            {
-                Flags[i].IsFree = false;
-            }
+            //for (int i = 0; i <= 7; i++)
+            //{
+            //    Flags[i].IsFree = false;
+            //}
         }
     }
 }

@@ -113,6 +113,40 @@ namespace WPFTestApp
 
             LampSlider.Value = value;
         }
+
+        private void RandomBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int[] Mastery = new int[8];
+
+            Random random = new Random();
+            for (int i = 0; i<8; i++)
+            {
+                Mastery[i] = random.Next(0, 3);
+            }
+            ComboP1.SelectedIndex = Mastery[0];
+            ComboP2.SelectedIndex = Mastery[1];
+            ComboP3.SelectedIndex = Mastery[2];
+            ComboP4.SelectedIndex = Mastery[3];
+            ComboP5.SelectedIndex = Mastery[4];
+            ComboP6.SelectedIndex = Mastery[5];
+            ComboP7.SelectedIndex = Mastery[6];
+            ComboP8.SelectedIndex = Mastery[7];
+            LampSlider.Value = random.Next(0, 100);
+        }
+
+        private void DefaultBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP1.SelectedIndex = 0;
+            ComboP8.SelectedIndex = 0;
+            LampSlider.Value = 0;
+        }
     }
     
 }

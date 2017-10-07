@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Media;
 
 namespace WPFTestApp
 {
@@ -25,10 +26,13 @@ namespace WPFTestApp
 	{
         private Archer[] DiffArchers; // Приходят за информацией
         private Image[] FLagLinks = new Image[8]; //Связывает окна флагов
-        private int[] RandomArray = new int[16]; // Держит в себе массив доступных
-        private int count = 0; //Число доступных флагов
+        //private int[] RandomArray = new int[16]; // Держит в себе массив доступных
+        private List<int> CountriesList = new List<int>();
+        //private int count = 0; //Число доступных флагов
         private int[] EndArr = new int[8]; //Индексы флагов в геймдате
         private int[] EnterArray = new int[8]; //Массив входных id флагов для отмены
+        private List<string> ComboText = new List<string>();
+        private ComboBox[] ComboLinks = new ComboBox[8];
 
         public Colors(Archer[] a1)
         {
@@ -39,6 +43,12 @@ namespace WPFTestApp
 
         private void LoadSettings()
         {
+            int i = 0;
+            for (i = 0; i<=15; i++)
+            {
+                ComboText.Add(GameData.Flags[i].FlagName);
+                GameData.Flags[i].IsFree = true;
+            }
             P1.Source = DiffArchers[0].Flag;
             P2.Source = DiffArchers[1].Flag;
             P3.Source = DiffArchers[2].Flag;
@@ -49,26 +59,33 @@ namespace WPFTestApp
             P8.Source = DiffArchers[7].Flag;
             FLagLinks[0] = P1;
             FLagLinks[1] = P2;
-            FLagLinks[2] = P3;
             FLagLinks[3] = P4;
             FLagLinks[4] = P5;
+            FLagLinks[2] = P3;
             FLagLinks[5] = P6;
             FLagLinks[6] = P7;
             FLagLinks[7] = P8;
-            ComboP1.Text = DiffArchers[0].Country;
-            ComboP2.Text = DiffArchers[1].Country;
-            ComboP3.Text = DiffArchers[2].Country;
-            ComboP4.Text = DiffArchers[3].Country;
-            ComboP5.Text = DiffArchers[4].Country;
-            ComboP6.Text = DiffArchers[5].Country;
-            ComboP7.Text = DiffArchers[6].Country;
-            ComboP8.Text = DiffArchers[7].Country;
-            for (int i=0;i<=7;i++)
+            ComboLinks[0] = ComboP1;
+            ComboLinks[1] = ComboP2;
+            ComboLinks[2] = ComboP3;
+            ComboLinks[3] = ComboP4;
+            ComboLinks[4] = ComboP5;
+            ComboLinks[5] = ComboP6;
+            ComboLinks[6] = ComboP7;
+            ComboLinks[7] = ComboP8;
+            
+            for (i =0; i<8;i++)
             {
-                EnterArray[i] = DiffArchers[i].Flag_id;
+                int current = DiffArchers[i].Flag_id;
+                EnterArray[i] = current;
+                EndArr[i] = current;
+                ComboLinks[i].ItemsSource = ComboText;
+                ComboLinks[i].SelectedIndex = current;
+                GameData.Flags[current].IsFree = false;
             }
-            EndArr = EnterArray;
         }
+
+
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i<=15; i++)
@@ -91,69 +108,109 @@ namespace WPFTestApp
             {
                 DiffArchers[i].Flag = GameData.Flags[EndArr[i]].FlagPath;
                 DiffArchers[i].Country = GameData.Flags[EndArr[i]].FlagName;
-                GameData.Flags[EndArr[i]].IsFree = false;
+                GameData.Flags[EndArr[i]].IsFree = true;
                 DiffArchers[i].Flag_id = EndArr[i];
             }
             this.Close();
         }
 
-        private void generateArr()
-        {
-            count = 0;
-            for (int i = 0;i<=15; i++)
-            {
-                if (GameData.Flags[i].IsFree)
-                {
-                    RandomArray[count] = i;
-                    count++;
-                }
-            }
-        }
+        //private void generateArr()
+        //{
+        //    count = 0;
+        //    CountriesList.Clear();
+        //    for (int i = 0;i<=8; i++)
+        //    {
+        //        if (GameData.Flags[i].IsFree)
+        //        {
+        //            //RandomArray[count] = i;
+        //            //count++;
+        //            CountriesList.Add(i);
+        //        }
+        //    }
+        //}
 
         private void RandomBtn_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i<=15; i++)
+            int i = 0;
+            CountriesList.Clear();
+            for (i = 0; i<=7; i++)
             {
                 GameData.Flags[i].IsFree = true;
+                CountriesList.Add(i);
             }
             Random rnd = new Random();
-            for (int i = 0; i<=7; i++)
+            for (i = 0; i<=7; i++)
             {
-                generateArr();
-                int current = rnd.Next(0, count);
-                FLagLinks[i].Source = GameData.Flags[RandomArray[current]].FlagPath;
-                GameData.Flags[RandomArray[current]].IsFree = false;
-                EndArr[i] = RandomArray[current];
+                //generateArr();
+                //int current = rnd.Next(0, count);
+                //FLagLinks[i].Source = GameData.Flags[RandomArray[current]].FlagPath;
+                //ComboLinks[i].SelectedIndex = RandomArray[current];
+                //GameData.Flags[RandomArray[current]].IsFree = false;
+                //EndArr[i] = RandomArray[current];
+                int current = rnd.Next(0, CountriesList.Count);
+                ComboLinks[i].SelectedIndex = CountriesList[current];
+                EndArr[i] = CountriesList[current];
+                CountriesList.RemoveAt(current);
             }
         }
 
-        private void SomeContextMenuOpening(object sender, EventArgs e)
-        {
-            generateArr();
-            ComboBox Combo = sender as ComboBox;
-            Combo.Items.Clear();
-            for (int i = 0; i<count; i++)
-            {
-                Combo.Items.Insert(i,GameData.Flags[RandomArray[i]].FlagName);
-            }
-            Combo.Items.Refresh();
-        }
+        //private void SomeContextMenuOpening(object sender, EventArgs e)
+        //{
+        //    generateArr();
+        //    ComboBox Combo = sender as ComboBox;
+        //    Combo.Items.Clear();
+        //    for (int i = 0; i<count; i++)
+        //    {
+        //        Combo.Items.Insert(i,GameData.Flags[RandomArray[i]].FlagName);
+        //    }
+        //    Combo.Items.Refresh();
+        //}
 
         private void ChangeCountry(object sender, SelectionChangedEventArgs e)
         {
             ComboBox Combo = sender as ComboBox;
             int Item = Convert.ToInt32(Combo.Tag);
-            if (Combo.SelectedIndex == -1)
+            //if (Combo.SelectedIndex == -1)
+            //{
+            //    e.Handled = true;
+            //}
+            //else
+            //{
+                //int selected = RandomArray[Combo.SelectedIndex];
+                //GameData.Flags[EndArr[Item]].IsFree = true;
+                //FLagLinks[Item].Source = GameData.Flags[selected].FlagPath;
+                //EndArr[Item] = selected;
+                //GameData.Flags[selected].IsFree = false;
+
+                int selected = Combo.SelectedIndex;
+                if (GameData.Flags[selected].IsFree)
+                {
+                    GameData.Flags[EndArr[Item]].IsFree = true;
+                    FLagLinks[Item].Source = GameData.Flags[selected].FlagPath;
+                    EndArr[Item] = selected;
+                    GameData.Flags[selected].IsFree = false;
+                }
+                else
+                {
+                    //MessageBox.Show("Эта страна уже используется");
+                Combo.SelectedIndex = EndArr[Item];
+                SystemSounds.Beep.Play();
+                }
+            //}
+        }
+
+        private void DefaultBtn_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i<=15;i++)
             {
-                e.Handled = true;
+                GameData.Flags[i].IsFree = true;
             }
-            else
+            for (int i = 0; i<8; i++)
             {
-                int selected = RandomArray[Combo.SelectedIndex];
-                GameData.Flags[EndArr[Item]].IsFree = true;
-                FLagLinks[Item].Source = GameData.Flags[selected].FlagPath;
-                EndArr[Item] = selected;
-                GameData.Flags[selected].IsFree = false;
+                FLagLinks[i].Source = GameData.Flags[i].FlagPath;
+                ComboLinks[i].SelectedIndex = i;
+                GameData.Flags[i].IsFree = false;
+                EndArr[i] = i;
             }
         }
     }

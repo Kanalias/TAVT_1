@@ -14,7 +14,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
-            <RowDefinition/>
+            <RowDefinition Height="52"/>
         </Grid.RowDefinitions>
 
         <Image Name="P1" 
@@ -34,7 +34,6 @@
                   Width="80"
                   Height="20" Margin="65,25,5,5"
                   Tag="0"
-                  DropDownOpened="SomeContextMenuOpening"
                   SelectionChanged="ChangeCountry"
                   />
 
@@ -56,8 +55,7 @@
             Height="20" 
             Margin="5,25,65,5"
                   Tag="1"
-                  DropDownOpened="SomeContextMenuOpening"
-                  SelectionChanged="ChangeCountry"/>
+                  SelectionChanged="ChangeCountry" IsReadOnly="True"/>
 
         <Image x:Name="P3" 
             Grid.Column="0"
@@ -76,7 +74,6 @@
             Width="80"
             Height="20" Margin="65,25,5,5"
                   Tag="2"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Image x:Name="P4" 
@@ -96,7 +93,6 @@
             Width="80"
             Height="20" Margin="5,25,65,5"
                   Tag="3"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Image x:Name="P5" 
@@ -116,7 +112,6 @@
             Width="80"
             Height="20" Margin="65,25,5,5"
                   Tag="4"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Image x:Name="P6" 
@@ -136,7 +131,6 @@
             Width="80"
             Height="20" Margin="5,25,65,5"
                   Tag="5"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Image x:Name="P7" 
@@ -156,7 +150,6 @@
             Width="80"
             Height="20" Margin="65,25,5,5"
                   Tag="6"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Image x:Name="P8" 
@@ -176,33 +169,32 @@
             Width="80"
             Height="20" Margin="5,25,65,5"
                   Tag="7"
-            DropDownOpened="SomeContextMenuOpening"
             SelectionChanged="ChangeCountry"/>
 
         <Button
 			VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
 			Height="20"
-            Width="75"
             Grid.Row="4"
             Grid.Column="0"
 		    x:Name="CancelBtn"
             Click="CancelBtn_Click"
-            Content="Cancel"/>
+            Content="Cancel" Margin="30,15"/>
         <Button VerticalContentAlignment="Center" 
                 HorizontalContentAlignment="Center" 
-                Height="20" Width="75" 
+                Height="20" 
                 Content="OK" 
                 x:Name="OKBtn" 
                 Click="OKBtn_Click" 
                 Grid.Column="1" 
-                Grid.Row="4"/>
+                Grid.Row="4" Margin="30,15"/>
         <Button Name="RandomBtn"
                 Click="RandomBtn_Click"
-                Grid.ColumnSpan="2"
+                Grid.Column="0"
                 Grid.Row="5"
-                Content="Random Colors"
+                Content="Random Colors" Margin="30,10,30,20"
                 />
+        <Button Name="DefaultBtn" Content="Default" Grid.Column="1" Grid.Row="5" Click="DefaultBtn_Click" Margin="30,10,30,20"/>
 
 
     </Grid>
