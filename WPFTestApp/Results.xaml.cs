@@ -145,6 +145,18 @@ namespace WPFTestApp
                                 player[i].reason = "lowest";
                             }
                             else currentscore--;
+
+                        }
+                        if (player[winner[0]].place == 0) //Если мы даже так не нашли разницы, то даем им случайные места.
+                        {
+                            Random random = new Random();
+                            while (winners.Count != 0)
+                            {
+                                int lucky = random.Next(0, winners.Count);
+                                player[lucky].place = currentPlace++;
+                                player[lucky].reason = "LUCK";
+                                winners.RemoveAt(lucky);
+                            }
                         }
                     }
                     else
@@ -195,11 +207,14 @@ namespace WPFTestApp
             }
             if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
             {
-                player[first].place = currentPlace;
-                player[first].reason = "Identive";
-                player[second].place = currentPlace;
-                player[first].reason = "Identive";
-                currentPlace += 2;
+                Random random = new Random();
+                while (winners.Count != 0)
+                {
+                    int lucky = random.Next(0, winners.Count);
+                    player[lucky].place = currentPlace++;
+                    player[lucky].reason = "LUCK";
+                    winners.RemoveAt(lucky);
+                }
             }
         }
 
