@@ -61,78 +61,146 @@ namespace WPFTestApp
                 }
                 else
                 {
-                    for (int i = 0; i<8;i++)
-                    {
-                        player[i].Shoot = false;
-                    }
-                    int currentscore = 10; //Устанавливаем значение для просмотра по счету в 10
+                    //for (int i = 0; i<8;i++)
+                    //{
+                    //    player[i].Shoot = false;
+                    //}
+                    //int currentscore = 10; //Устанавливаем значение для просмотра по счету в 10
                     if (winners.Count == 2) //Случай если у нас всего 2 игрока с одним набором очков
                     {
-                        int first = winners[0];
-                        int second = winners[1];
-                        /*int p1 = archers[first].PointsList.Max();
-                        int p2 = archers[second].PointsList.Max();
-                        if (p1 > p2) //Если максимум первого больше второго
-                        {
-                            player[first].place = currentPlace++;
-                            player[second].place = currentPlace++;
-                            player[first].reason = "MaxShoot";
-                            player[second].reason = "MaxShoot";
-                        }
-                        else if (p1 < p2) //наоброт
-                        {
-                            player[second].place = currentPlace++;
-                            player[first].place = currentPlace++;
-                            player[first].reason = "MaxShoot";
-                            player[second].reason = "MaxShoot";
-                        }
-                        else*/
-                            //{
-                            while (currentscore > 0) //Пойдем от самого верха спускать уровень и смотреть.
-                            {
-                                player[first].Shoot = archers[first].PointsList.IndexOf(currentscore) != -1;
-                                player[second].Shoot = archers[second].PointsList.IndexOf(currentscore) != -1;
-                                if (player[first].Shoot ^ player[second].Shoot)
-                                {
-                                    if (player[first].Shoot)
-                                    {
-                                        player[first].place = currentPlace++;
-                                        currentscore = 0;
-                                        player[first].reason = "Max";
-                                        player[second].place = currentPlace++;
-                                        player[second].reason = "Min";
-                                    }
-                                    else
-                                    {
-                                        player[second].place = currentPlace++;
-                                        currentscore = 0;
-                                        player[second].reason = "Max";
-                                        player[first].place = currentPlace++;
-                                        player[first].reason = "Min";
-                                    }
-                                }
-                                else currentscore--;
-                            }
-                            if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
-                            {
-                                player[first].place = currentPlace;
-                                player[first].reason = "Identive";
-                                player[second].place = currentPlace;
-                                player[first].reason = "Identive";
-                                currentPlace += 2;
-                            }
-
-                        //}
+                        PlacesForTwo(archers, ref currentPlace);
+                        //int first = winners[0];
+                        //int second = winners[1];
+                        //    while (currentscore > 0) //Пойдем от самого верха спускать уровень и смотреть.
+                        //    {
+                        //        player[first].Shoot = archers[first].PointsList.IndexOf(currentscore) != -1;
+                        //        player[second].Shoot = archers[second].PointsList.IndexOf(currentscore) != -1;
+                        //        if (player[first].Shoot ^ player[second].Shoot)
+                        //        {
+                        //            if (player[first].Shoot)
+                        //            {
+                        //                player[first].place = currentPlace++;
+                        //                currentscore = 0;
+                        //                player[first].reason = "Max";
+                        //                player[second].place = currentPlace++;
+                        //                player[second].reason = "Min";
+                        //            }
+                        //            else
+                        //            {
+                        //                player[second].place = currentPlace++;
+                        //                currentscore = 0;
+                        //                player[second].reason = "Max";
+                        //                player[first].place = currentPlace++;
+                        //                player[first].reason = "Min";
+                        //            }
+                        //        }
+                        //        else currentscore--;
+                        //    }
+                        //    if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
+                        //    {
+                        //        player[first].place = currentPlace;
+                        //        player[first].reason = "Identive";
+                        //        player[second].place = currentPlace;
+                        //        player[first].reason = "Identive";
+                        //        currentPlace += 2;
+                        //    }
 
                     }
-                    else if (winners.Count >= 3)
+                    else if (winners.Count == 3)
                     {
-                        MessageBox.Show("Wait");
-                        currentPlace = 9;
+                        int currentscore = 10;
+                        while (winners.Count == 3)
+                        {
+                            int trueCount = 0;
+                            int falseCount = 0;
+                            for (int i = 0; i<3;i++)
+                            {
+                                int current = winners[i];
+                                player[current].Shoot = archers[current].PointsList.IndexOf(currentscore) != -1;
+                                if (player[current].Shoot)
+                                {
+                                    trueCount++;
+                                }
+                                else
+                                {
+                                    falseCount++;
+                                }
+                            }
+                            if (trueCount == 1)
+                            {
+                                int i = 0;
+                                while (player[i].Shoot != true) i++;
+                                player[i].place = currentPlace++;
+                                winners.RemoveAt(i);
+                                player[i].reason = "Highest";
+                                PlacesForTwo(archers, ref currentPlace);
+                            }
+                            else if (falseCount == 1)
+                            {
+                                int i = 0;
+                                while (player[i].Shoot != false) i++;
+                                winners.RemoveAt(i);
+                                PlacesForTwo(archers, ref currentPlace);
+                                player[i].place = currentPlace++;
+                                player[i].reason = "lowest";
+                            }
+                            else currentscore--;
+                        }
+                    }
+                    else
+                    {
+                        Random random = new Random();
+                        while (winners.Count != 0)
+                        {
+                            int lucky = random.Next(0, winners.Count);
+                            player[lucky].place = currentPlace++;
+                            player[lucky].reason = "LUCK";
+                            winners.RemoveAt(lucky);
+                        }
                     }
                 }
             }
 
+        }
+
+        private void PlacesForTwo(Archer[] archers, ref int currentPlace)
+        {
+            int currentscore = 10;
+            int first = winners[0];
+            int second = winners[1];
+            while (currentscore > 0) //Пойдем от самого верха спускать уровень и смотреть.
+            {
+                player[first].Shoot = archers[first].PointsList.IndexOf(currentscore) != -1;
+                player[second].Shoot = archers[second].PointsList.IndexOf(currentscore) != -1;
+                if (player[first].Shoot ^ player[second].Shoot)
+                {
+                    if (player[first].Shoot)
+                    {
+                        player[first].place = currentPlace++;
+                        currentscore = 0;
+                        player[first].reason = "Max";
+                        player[second].place = currentPlace++;
+                        player[second].reason = "Min";
+                    }
+                    else
+                    {
+                        player[second].place = currentPlace++;
+                        currentscore = 0;
+                        player[second].reason = "Max";
+                        player[first].place = currentPlace++;
+                        player[first].reason = "Min";
+                    }
+                }
+                else currentscore--;
+            }
+            if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
+            {
+                player[first].place = currentPlace;
+                player[first].reason = "Identive";
+                player[second].place = currentPlace;
+                player[first].reason = "Identive";
+                currentPlace += 2;
+            }
         }
 
         private void Findmax()
