@@ -18,6 +18,10 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using System.IO;
+using System.Media;
 
 namespace WPFTestApp
 {
@@ -32,7 +36,8 @@ namespace WPFTestApp
         private int currentArcher;
         private Boolean GameIsOver;
         private const double deg = 0.0174533;
-        private const int delay = 1;
+        private int delay = 1001;
+        private settings settings = new settings();
         //public static int chance;
 
 
@@ -45,9 +50,11 @@ namespace WPFTestApp
             InitArchers();
             SpeedText.Text = SpeedSlider.Value.ToString();
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(delay + SpeedSlider.Value * 10);
+            timer.Interval = TimeSpan.FromMilliseconds(delay - SpeedSlider.Value * 10);
+            timer.Start();
             timer.IsEnabled = false;
             timer.Tick += Timer_Tick;
+            GameIsOver = true;
         }
 		
 		private void InitArchers()
@@ -63,104 +70,87 @@ namespace WPFTestApp
         private void StartShooting()
         {
             currentArcher = 0;
-            pause = false;
-            timer.Start();
+            //pause = false;
+            //timer.Start();
             Settings.IsEnabled = false;
+            FileOpt.IsEnabled = false;
+            Help.IsEnabled = false;
             timer.IsEnabled = true;
-            GameIsOver = false;
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (currentArcher == 0 && Archers[currentArcher].shoots == GameData.Shoots)
+            if (PauseButton.Content.ToString() == "Continue")
             {
-                int max = Archers[0].Count;
-                int indmax = 0;
-                for (int i = 0; i<=7;i++)
-                {
-                    if(Archers[i].Count>max)
-                    {
-                        max = Archers[i].Count;
-                        indmax = i;
-                    }
-                }
-                Window Results = new Results(Archers);
-                Results.ShowDialog();
-                //MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
-                StopShooting();
+                PauseShooting();
+                //PauseButton.Content = "Pause";
             }
-            else if (pause == false)
-                {
-                PartFlag.Source = Archers[currentArcher].Flag;
-                PartName.Content = Archers[currentArcher].Country;
-                PartCount.Content = "Счет: " + Archers[currentArcher].Count;
-                PartMastery.Content = Archers[currentArcher].Mastery;
-                LampLabel.Content = "";
-                    if (Archers[currentArcher].shoots != GameData.Shoots)
-                    {
-                        Shoot(currentArcher);
-                        Archers[currentArcher].shoots++;
-                        if (currentArcher == 7)
-                        {
-                            currentArcher = 0;
-                        }
-                        else
-                        {
-                            currentArcher++;
-                        }
-                    }
-                }
-            //throw new NotImplementedException();
+            GameIsOver = false;
         }
 
         private void StopShooting()
         {
-            timer.IsEnabled = false;
-            for (int i = 0; i<=7; i++)
+            //timer.IsEnabled = false;
+            for (int i = 0; i <= 7; i++)
             {
                 Archers[i].PointsList.Clear();
             }
             currentArcher = 0;
             Settings.IsEnabled = true;
-            GameIsOver = true;
+            FileOpt.IsEnabled = true;
+            Help.IsEnabled = true;
             Point.Width = 0;
             Point.Height = 0;
+            PartFlag.Source = null;
+            PartName.Content = "";
+            PartCount.Content = "";
+            PartMastery.Content = "";
+            PartPts.Content = "";
+            GameIsOver = true;
+            timer.IsEnabled = false;
+            if (PauseButton.Content.ToString() == "Continue")
+            {
+                PauseShooting();
+                //PauseButton.Content = "Pause";
+            }
         }
 
         private void PauseShooting()
         {
-            if (!GameIsOver)
+            if (PauseButton.Content.ToString() == "Pause")
             {
-                pause = !pause;
-                timer.IsEnabled = !timer.IsEnabled;
+                PauseButton.Content = "Continue";
+                pause = true;
+                Help.IsEnabled = true;
+                timer.IsEnabled = false;
             }
+            else
+            {
+                PauseButton.Content = "Pause";
+                pause = false;
+                Help.IsEnabled = false;
+                if (!GameIsOver) timer.IsEnabled = true;
+            }
+            //if (!GameIsOver)
+            //{
+            //    pause = !pause;
+            //    timer.IsEnabled = !timer.IsEnabled;
+            //}
         }
 
-		private void ExitButtonClick(object sender, RoutedEventArgs e)
-		{
-			Application.Current.Shutdown();
-		}
-		
-		private void ColorsButtonClick(object sender, RoutedEventArgs e)
-		{
-			Window Color = new Colors(Archers);
-			Color.ShowDialog();
-            for (int i = 0; i <= 7; i++)
-            {
-                Archers[i].VisualCountry.Content = Archers[i].Country;
-            }
+        void PauseButonCLick(object sender, RoutedEventArgs e)
+        {
+            PauseShooting();
+            //if (PauseButton.Content.ToString() == "Pause")
+            //{
+            //    PauseButton.Content = "Continue";
+            //    PauseShooting();
+            //}
+            //else
+            //{
+            //    PauseButton.Content = "Pause";
+            //    PauseShooting();
+            //}
         }
-		
-		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)
-		{
-			Window Difficulty = new Difficulty(Archers);
-			Difficulty.ShowDialog();
-            
-		}
-		
-		
-		void StartButtonClick(object sender, RoutedEventArgs e)
-		{
+
+        void StartButtonClick(object sender, RoutedEventArgs e)
+        {
             if (StartButton.Content.ToString() == "Start")
             {
                 for (int i = 0; i <= 7; i++)
@@ -187,6 +177,82 @@ namespace WPFTestApp
 
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ArrowLine.Visibility = Visibility.Hidden;
+            ArrowLowCap.Visibility = Visibility.Hidden;
+            ArrowUpCap.Visibility = Visibility.Hidden;
+            if (currentArcher == 0 && Archers[currentArcher].shoots == GameData.Shoots)
+            {
+                int max = Archers[0].Count;
+                int indmax = 0;
+                for (int i = 0; i<=7;i++)
+                {
+                    if(Archers[i].Count>max)
+                    {
+                        max = Archers[i].Count;
+                        indmax = i;
+                    }
+                }
+                Window Results = new Results(Archers);
+                Results.ShowDialog();
+                //MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
+                //StopShooting();
+                GameIsOver = true;
+                timer.IsEnabled = false;
+            }
+            else if (!pause)
+            {
+                //timer.IsEnabled = false;
+                PartFlag.Source = Archers[currentArcher].Flag;
+                PartName.Content = Archers[currentArcher].Country;
+                PartCount.Content = "Счет: " + Archers[currentArcher].Count;
+                PartMastery.Content = Archers[currentArcher].Mastery;
+                //LampLabel.Content = "";
+                //LampLabel.IsEnabled = false;
+                    if (Archers[currentArcher].shoots != GameData.Shoots)
+                    {
+                        Shoot(currentArcher);
+                        Archers[currentArcher].shoots++;
+                        if (currentArcher == 7)
+                        {
+                            currentArcher = 0;
+                        }
+                        else
+                        {
+                            currentArcher++;
+                        }
+                    }
+                //Thread.Sleep(timer.Interval);
+                //timer.IsEnabled = true;
+            }
+            //throw new NotImplementedException();
+            
+        }
+
+		private void ExitButtonClick(object sender, RoutedEventArgs e)
+		{
+			Application.Current.Shutdown();
+		}
+		
+		private void ColorsButtonClick(object sender, RoutedEventArgs e)
+		{
+			Window Color = new Colors(Archers);
+			Color.ShowDialog();
+            for (int i = 0; i <= 7; i++)
+            {
+                Archers[i].VisualCountry.Content = Archers[i].Country;
+            }
+        }
+		
+		private void DifficultyButtonCLick(object sender, RoutedEventArgs e)
+		{
+			Window Difficulty = new Difficulty(Archers);
+			Difficulty.ShowDialog();
+            ChanceLabel.Content = "Вероятность появления ветра: " + GameData.chance.ToString() + "%";
+
+        }
+
         private void Shoot(int archer)    //Метод Shoot прогоняет 10 выстрелов
         {
                     int range = 0;
@@ -200,22 +266,25 @@ namespace WPFTestApp
             switch (Archers[archer].Mastery)
             {
                 case "Novice":
-                    range = rnd.Next(0, 165);
+                    range = rnd.Next(0, 166);
                     break;
                 case "Master":
-                    range = rnd.Next(0, 135);
+                    range = rnd.Next(0, 136);
                     break;
                 case "Champion":
-                    range = rnd.Next(0, 105);
+                    range = rnd.Next(0, 106);
                     break;
             }
-            grad = rnd.Next(0, 360);
+            grad = rnd.Next(0, 361);
             bool lamp = rnd.Next(0, 100000000) <= GameData.chance * 1000000;
             if (lamp)
             {
-                int lampgrad = rnd.Next(0, 360);
-                int lamprange = rnd.Next(0, 30);
-                LampLabel.Content = "Lamp Activated";
+                int lampgrad = rnd.Next(0, 361);
+                int lamprange = rnd.Next(0, 31);
+                //LampLabel.Content = "Появился ветер";
+                //LampLabel.IsEnabled = true;
+                DrawLampLine(lamprange, lampgrad);
+                LampRange.Content = (lamprange/15).ToString();
                 int xLeft = (int)Math.Round(xc + Math.Cos(grad*deg) * range + Math.Cos(lampgrad*deg) * lamprange);
                 int xRight = (int)Math.Round(xc - Math.Cos(grad*deg) * range - Math.Cos(lampgrad*deg) * lamprange);
                 int yUp = (int)Math.Round(yc - Math.Sin(grad*deg) * range - Math.Sin(lampgrad*deg) * lamprange);
@@ -233,32 +302,32 @@ namespace WPFTestApp
             }
             Archers[archer].VisualCounter.Content = Archers[archer].Count.ToString();
             Archers[archer].PointsList.Add(pts);
-            PartPts.Content = pts.ToString();
+            PartPts.Content = "Попал в: " + pts.ToString();
         }
 
-		void PauseButonCLick(object sender, RoutedEventArgs e)
-		{
-	        if (PauseButton.Content.ToString() == "Pause")
-            {
-                PauseButton.Content = "Continue";
-                PauseShooting();
-            }
-            else
-            {
-                PauseButton.Content = "Pause";
-                PauseShooting();
-            }
-		}
-		void window1_Loaded(object sender, RoutedEventArgs e)
-		{
-			
-		}
+        private void DrawLampLine(int range, int grad)
+        {
+            ArrowLine.Visibility = Visibility.Visible;
+            ArrowUpCap.Visibility = Visibility.Visible;
+            ArrowLowCap.Visibility = Visibility.Visible;
+            ArrowLine.X2 = range * Math.Cos(grad * deg) + 30;
+            ArrowLine.Y2 = range * Math.Sin(grad * deg) + 30;
+            ArrowLowCap.X1 = ArrowLine.X2;
+            ArrowLowCap.Y1 = ArrowLine.Y2;
+            ArrowUpCap.X1 = ArrowLine.X2;
+            ArrowUpCap.Y1 = ArrowLine.Y2;
+            ArrowLowCap.X2 = (range-4) * Math.Cos((grad - 15) * deg) + 30;
+            ArrowLowCap.Y2 = (range-4) * Math.Sin((grad - 15) * deg) + 30;
+            ArrowUpCap.X2 = (range-4) * Math.Cos((grad + 15) * deg) + 30;
+            ArrowUpCap.Y2 = (range-4) * Math.Sin((grad + 15) * deg) + 30;
+        }
+
 		void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			int value = Convert.ToInt32(Math.Round(SpeedSlider.Value));
 			SpeedSlider.Value = value;
 			SpeedText.Text = value.ToString();
-            timer.Interval = TimeSpan.FromMilliseconds(delay + Convert.ToInt32(SpeedSlider.Value)*10);
+            timer.Interval = TimeSpan.FromMilliseconds(delay - Convert.ToInt32(SpeedSlider.Value)*10);
 		}
 		
 		void SpeedText_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -268,6 +337,7 @@ namespace WPFTestApp
 				e.Handled = true;
 			}
 		}
+
 		void SpeedText_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			
@@ -276,7 +346,8 @@ namespace WPFTestApp
 			{
 				value = 0;
 				SpeedText.Text = "0";
-			}
+                SystemSounds.Beep.Play();
+            }
 			else 
 			{
 				value = int.Parse(SpeedText.Text);
@@ -285,12 +356,14 @@ namespace WPFTestApp
 				{
 					value = 100;
 					SpeedText.Text = "100";
-				}
+                    SystemSounds.Beep.Play();
+                }
 				else if (value <0)
 				{
 					value = 0;
 					SpeedText.Text = "0";
-				}
+                    SystemSounds.Beep.Play();
+                }
 			}
 	
 			SpeedSlider.Value = value;
@@ -306,6 +379,45 @@ namespace WPFTestApp
         {
             Window About = new About();
             About.ShowDialog();
+        }
+
+        private void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog { Filter = "Json file (*.json)|*.json"};
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    settings.save[i].Country = Archers[i].Country;
+                    settings.save[i].Flag_id = Archers[i].Flag_id;
+                    settings.save[i].Mastery = Archers[i].Mastery;
+                }
+                settings.saveChance = GameData.chance;
+                File.WriteAllText(saveFileDialog.FileName, JsonConvert.SerializeObject(settings));
+            }
+
+        }
+
+        private void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog { Filter = "Json file (*.json)|*.json" };
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                settings = JsonConvert.DeserializeObject<settings>(File.ReadAllText(openFileDialog.FileName));
+                for (int i=0; i<8; i++)
+                {
+                    Archers[i].Country = settings.save[i].Country;
+                    Archers[i].Flag_id = settings.save[i].Flag_id;
+                    Archers[i].Mastery = settings.save[i].Mastery;
+                    Archers[i].VisualCountry.Content = settings.save[i].Country;
+                    int id = Archers[i].Flag_id;
+                    Archers[i].Flag = GameData.Flags[id].FlagPath;
+                }
+                GameData.chance = settings.saveChance;
+                ChanceLabel.Content = "Вероятность появления ветра: " + GameData.chance.ToString() + "%";
+            }
         }
     }
 

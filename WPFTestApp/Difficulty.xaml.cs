@@ -131,7 +131,7 @@ namespace WPFTestApp
             ComboP6.SelectedIndex = Mastery[5];
             ComboP7.SelectedIndex = Mastery[6];
             ComboP8.SelectedIndex = Mastery[7];
-            LampSlider.Value = random.Next(0, 100);
+            LampSlider.Value = random.Next(0, 101);
         }
 
         private void DefaultBtn_Click(object sender, RoutedEventArgs e)
