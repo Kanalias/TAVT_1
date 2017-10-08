@@ -166,7 +166,7 @@
             HorizontalContentAlignment="Center"
 			VerticalAlignment="Bottom"
 			Margin="230,0,0,12.5"
-			TextChanged="SpeedText_TextChanged" />
+			TextChanged="SpeedText_TextChanged" PreviewKeyDown="SpeedText_PreviewKeyDown" />
 
         <Ellipse Grid.Column="1" Grid.Row="1" Stroke="Blue" Margin="15,15,15,15"/>
         <Ellipse Grid.Column="1" Grid.Row="1" Stroke="Red" Margin="30,30"/>

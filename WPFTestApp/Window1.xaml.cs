@@ -332,8 +332,9 @@ namespace WPFTestApp
 		
 		void SpeedText_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			if (!char.IsDigit(e.Text,e.Text.Length-1))
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ' | e.Text.ToString()[0] == '0') 
 			{
+                SystemSounds.Beep.Play();
 				e.Handled = true;
 			}
 		}
@@ -342,7 +343,7 @@ namespace WPFTestApp
 		{
 			
 			int value;
-			if (SpeedText.Text == "" | SpeedText.Text == " 0" | SpeedText.Text == " ")
+			if (SpeedText.Text == "")
 			{
 				value = 0;
 				SpeedText.Text = "0";
@@ -417,6 +418,15 @@ namespace WPFTestApp
                 }
                 GameData.chance = settings.saveChance;
                 ChanceLabel.Content = "Вероятность появления ветра: " + GameData.chance.ToString() + "%";
+            }
+        }
+
+        private void SpeedText_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                SystemSounds.Beep.Play();
+                e.Handled = true;
             }
         }
     }

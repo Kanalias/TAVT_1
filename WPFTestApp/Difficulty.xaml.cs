@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Media;
 
 namespace WPFTestApp
 {
@@ -81,8 +82,9 @@ namespace WPFTestApp
 
         private void LampBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ' | e.Text.ToString()[0] == '0')
             {
+                SystemSounds.Beep.Play();
                 e.Handled = true;
             }
         }
@@ -90,10 +92,11 @@ namespace WPFTestApp
         private void LampBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int value;
-            if (LampBox.Text == "" | LampBox.Text == " 0" | LampBox.Text == " ")
+            if (LampBox.Text == "")
             {
                 value = 0;
                 LampBox.Text = "0";
+                SystemSounds.Beep.Play();
             }
             else
             {
@@ -103,11 +106,13 @@ namespace WPFTestApp
                 {
                     value = 100;
                     LampBox.Text = "100";
+                    SystemSounds.Beep.Play();
                 }
                 else if (value < 0)
                 {
                     value = 0;
                     LampBox.Text = "0";
+                    SystemSounds.Beep.Play();
                 }
             }
 
@@ -146,6 +151,15 @@ namespace WPFTestApp
             ComboP1.SelectedIndex = 0;
             ComboP8.SelectedIndex = 0;
             LampSlider.Value = 0;
+        }
+
+        private void LampBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                SystemSounds.Beep.Play();
+                e.Handled = true;
+            }
         }
     }
     
