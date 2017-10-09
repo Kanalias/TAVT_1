@@ -255,6 +255,7 @@ namespace WPFTestApp
             int i = 0;
             //First
             Part1Country.Content = archer[i].Country;
+            Part1Mastery.Content = archer[i].Mastery;
             Part1Pts.Content = archer[i].Count;
             Part1Img.Source = archer[i].Flag;
             Part1ListPts.ItemsSource = archer[i].PointsList;
@@ -263,6 +264,7 @@ namespace WPFTestApp
             i++;
             //Second
             Part2Country.Content = archer[i].Country;
+            Part2Mastery.Content = archer[i].Mastery;
             Part2Pts.Content = archer[i].Count;
             Part2Img.Source = archer[i].Flag;
             Part2ListPts.ItemsSource = archer[i].PointsList;
@@ -271,6 +273,7 @@ namespace WPFTestApp
             i++;
             //Third
             Part3Country.Content = archer[i].Country;
+            Part3Mastery.Content = archer[i].Mastery;
             Part3Pts.Content = archer[i].Count;
             Part3Img.Source = archer[i].Flag;
             Part3ListPts.ItemsSource = archer[i].PointsList;
@@ -279,6 +282,7 @@ namespace WPFTestApp
             i++;
             //Forth
             Part4Country.Content = archer[i].Country;
+            Part4Mastery.Content = archer[i].Mastery;
             Part4Pts.Content = archer[i].Count;
             Part4Img.Source = archer[i].Flag;
             Part4ListPts.ItemsSource = archer[i].PointsList;
@@ -287,6 +291,7 @@ namespace WPFTestApp
             i++;
             //Fifth
             Part5Country.Content = archer[i].Country;
+            Part5Mastery.Content = archer[i].Mastery;
             Part5Pts.Content = archer[i].Count;
             Part5Img.Source = archer[i].Flag;
             Part5ListPts.ItemsSource = archer[i].PointsList;
@@ -295,6 +300,7 @@ namespace WPFTestApp
             i++;
             //Sixth
             Part6Country.Content = archer[i].Country;
+            Part6Mastery.Content = archer[i].Mastery;
             Part6Pts.Content = archer[i].Count;
             Part6Img.Source = archer[i].Flag;
             Part6ListPts.ItemsSource = archer[i].PointsList;
@@ -303,6 +309,7 @@ namespace WPFTestApp
             i++;
             //Seventh
             Part7Country.Content = archer[i].Country;
+            Part7Mastery.Content = archer[i].Mastery;
             Part7Pts.Content = archer[i].Count;
             Part7Img.Source = archer[i].Flag;
             Part7ListPts.ItemsSource = archer[i].PointsList;
@@ -311,6 +318,7 @@ namespace WPFTestApp
             i++;
             //Eighth
             Part8Country.Content = archer[i].Country;
+            Part8Mastery.Content = archer[i].Mastery;
             Part8Pts.Content = archer[i].Count;
             Part8Img.Source = archer[i].Flag;
             Part8ListPts.ItemsSource = archer[i].PointsList;

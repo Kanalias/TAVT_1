@@ -38,6 +38,8 @@ namespace WPFTestApp
         private const double deg = 0.0174533;
         private int delay = 1001;
         private settings settings = new settings();
+        private int speed;
+        private DispatcherTimer ErrorTimer = new DispatcherTimer();
         //public static int chance;
 
 
@@ -54,10 +56,19 @@ namespace WPFTestApp
             timer.Start();
             timer.IsEnabled = false;
             timer.Tick += Timer_Tick;
+            ErrorTimer.Interval = TimeSpan.FromSeconds(1);
+            ErrorTimer.Tick += ErrorTimer_Tick;
             GameIsOver = true;
         }
-		
-		private void InitArchers()
+
+        private void ErrorTimer_Tick(object sender, EventArgs e)
+        {
+            ErrorLabel.Content = "";
+            ErrorTimer.Stop();
+            //throw new NotImplementedException();
+        }
+
+        private void InitArchers()
 		{
 			for(int i = 0; i<8; i++)
 			{
@@ -70,17 +81,18 @@ namespace WPFTestApp
         private void StartShooting()
         {
             currentArcher = 0;
+            speed = Convert.ToInt32(SpeedSlider.Value);
             //pause = false;
             //timer.Start();
             Settings.IsEnabled = false;
             FileOpt.IsEnabled = false;
             Help.IsEnabled = false;
             timer.IsEnabled = true;
-            if (PauseButton.Content.ToString() == "Continue")
-            {
-                PauseShooting();
-                //PauseButton.Content = "Pause";
-            }
+            //if (PauseButton.Content.ToString() == "Continue")
+            //{
+            //    PauseShooting();
+            //    //PauseButton.Content = "Pause";
+            //}
             GameIsOver = false;
         }
 
@@ -102,6 +114,8 @@ namespace WPFTestApp
             PartCount.Content = "";
             PartMastery.Content = "";
             PartPts.Content = "";
+            LampRange.Content = "";
+            SpeedSlider.Value = speed;
             GameIsOver = true;
             timer.IsEnabled = false;
             if (PauseButton.Content.ToString() == "Continue")
@@ -179,6 +193,7 @@ namespace WPFTestApp
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            LampRange.Content = "";
             ArrowLine.Visibility = Visibility.Hidden;
             ArrowLowCap.Visibility = Visibility.Hidden;
             ArrowUpCap.Visibility = Visibility.Hidden;
@@ -249,7 +264,7 @@ namespace WPFTestApp
 		{
 			Window Difficulty = new Difficulty(Archers);
 			Difficulty.ShowDialog();
-            ChanceLabel.Content = "Вероятность появления ветра: " + GameData.chance.ToString() + "%";
+            ChanceLabel.Content = "Current chance of wind is: " + GameData.chance.ToString() + "%";
 
         }
 
@@ -332,9 +347,11 @@ namespace WPFTestApp
 		
 		void SpeedText_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ' | e.Text.ToString()[0] == '0') 
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ') 
 			{
                 SystemSounds.Beep.Play();
+                ErrorLabel.Content = "Wrong button";
+                ErrorTimer.Start();
 				e.Handled = true;
 			}
 		}
@@ -357,14 +374,16 @@ namespace WPFTestApp
 				{
 					value = 100;
 					SpeedText.Text = "100";
-                    SystemSounds.Beep.Play();
+                    ErrorLabel.Content = "Wrong number";
+                    ErrorTimer.Start();
+                    //SystemSounds.Beep.Play();
                 }
-				else if (value <0)
-				{
-					value = 0;
-					SpeedText.Text = "0";
-                    SystemSounds.Beep.Play();
-                }
+				//else if (value <0)
+				//{
+				//	value = 0;
+				//	SpeedText.Text = "0";
+    //                SystemSounds.Beep.Play();
+    //            }
 			}
 	
 			SpeedSlider.Value = value;
@@ -417,7 +436,7 @@ namespace WPFTestApp
                     Archers[i].Flag = GameData.Flags[id].FlagPath;
                 }
                 GameData.chance = settings.saveChance;
-                ChanceLabel.Content = "Вероятность появления ветра: " + GameData.chance.ToString() + "%";
+                ChanceLabel.Content = "Current chance of wind is: " + GameData.chance.ToString() + "%";
             }
         }
 
@@ -426,12 +445,10 @@ namespace WPFTestApp
             if (e.Key == Key.Space)
             {
                 SystemSounds.Beep.Play();
+                ErrorLabel.Content = "Wrong button";
+                ErrorTimer.Start();
                 e.Handled = true;
             }
         }
-    }
-
-
-	
-	
+    }	
 }

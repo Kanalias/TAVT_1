@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Media;
+using System.Windows.Threading;
 
 namespace WPFTestApp
 {
@@ -25,12 +26,21 @@ namespace WPFTestApp
 	public partial class Difficulty : Window
 	{
         private Archer[] DiffArchers;
-
+        private DispatcherTimer ErrorTimer = new DispatcherTimer();
 		public Difficulty(Archer[] a1)
 		{
 			InitializeComponent();
             DiffArchers = a1;
             LoadSettings(DiffArchers);
+            ErrorTimer.Interval = TimeSpan.FromSeconds(1);
+            ErrorTimer.Tick += ErrorTimer_Tick;
+        }
+
+        private void ErrorTimer_Tick(object sender, EventArgs e)
+        {
+            ErrorLabel.Content = "";
+            ErrorTimer.Stop();
+            //throw new NotImplementedException();
         }
 
         private void LoadSettings(Archer[] a1)
@@ -84,6 +94,8 @@ namespace WPFTestApp
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ' | e.Text.ToString()[0] == '0')
             {
+                ErrorLabel.Content = "Wrong button";
+                ErrorTimer.Start();
                 SystemSounds.Beep.Play();
                 e.Handled = true;
             }
@@ -106,14 +118,16 @@ namespace WPFTestApp
                 {
                     value = 100;
                     LampBox.Text = "100";
+                    ErrorLabel.Content = "Wrong number";
+                    ErrorTimer.Start();
                     SystemSounds.Beep.Play();
                 }
-                else if (value < 0)
-                {
-                    value = 0;
-                    LampBox.Text = "0";
-                    SystemSounds.Beep.Play();
-                }
+                //else if (value < 0)
+                //{
+                //    value = 0;
+                //    LampBox.Text = "0";
+                //    SystemSounds.Beep.Play();
+                //}
             }
 
             LampSlider.Value = value;
@@ -159,6 +173,8 @@ namespace WPFTestApp
             {
                 SystemSounds.Beep.Play();
                 e.Handled = true;
+                ErrorLabel.Content = "Wrong Button";
+                ErrorTimer.Start();
             }
         }
     }

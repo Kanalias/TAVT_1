@@ -5,25 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTestApp"
         mc:Ignorable="d"
-        Title="About" Height="205" Width="300" ResizeMode="CanMinimize">
+        Title="About" Height="218" Width="300" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Button Grid.Row="1" Content="Close" Name="Exit" Click="Exit_Click" Margin="0,0,0,-4"/>
-        <RichTextBox Grid.Row="0" IsDocumentEnabled="True" IsReadOnly="True" AutoWordSelection="False">
-            <FlowDocument>
-                <Paragraph TextAlignment="Center">
-                    <Run FontSize="16" Text="Автомат разработал студент группы ИВТ-22 Жолобов Никита"/>
-                </Paragraph>
-                <Paragraph>
-                    <Run/>
-                </Paragraph>
-                <Paragraph TextAlignment="Center">
-                    <Run FontSize="16" Text="Киров, 2017 год"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="&#xD;&#xA;Автомат разработал студент группы ИВТ-22 Жолобов Никита&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Киров, 2017 год&#xD;&#xA;" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="140" Width="294" SelectionOpacity="0" IsHitTestVisible="False" IsReadOnly="True" IsUndoEnabled="False"/>
     </Grid>
 </Window>

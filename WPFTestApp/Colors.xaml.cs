@@ -16,12 +16,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Media;
+using System.Windows.Threading;
 
 namespace WPFTestApp
 {
 	/// <summary>
 	/// Interaction logic for Colors.xaml
 	/// </summary>
+    /// 
+
 	public partial class Colors : Window
 	{
         private Archer[] DiffArchers; // Приходят за информацией
@@ -33,12 +36,22 @@ namespace WPFTestApp
         private int[] EnterArray = new int[8]; //Массив входных id флагов для отмены
         private List<string> ComboText = new List<string>();
         private ComboBox[] ComboLinks = new ComboBox[8];
+        private DispatcherTimer ErrorTimer = new DispatcherTimer();
 
         public Colors(Archer[] a1)
         {
             InitializeComponent();
             DiffArchers = a1;
             LoadSettings();
+            ErrorTimer.Interval = TimeSpan.FromSeconds(1);
+            ErrorTimer.Tick += ErrorTimer_Tick;
+        }
+
+        private void ErrorTimer_Tick(object sender, EventArgs e)
+        {
+            ErrorTimer.Stop();
+            ErrorLabel.Content = "";
+            //throw new NotImplementedException();
         }
 
         private void LoadSettings()
@@ -192,7 +205,9 @@ namespace WPFTestApp
                 }
                 else
                 {
-                    //MessageBox.Show("Эта страна уже используется");
+                //MessageBox.Show("Эта страна уже используется");
+                ErrorLabel.Content = "This country is already in use";
+                ErrorTimer.Start();
                 Combo.SelectedIndex = EndArr[Item];
                 SystemSounds.Beep.Play();
                 }

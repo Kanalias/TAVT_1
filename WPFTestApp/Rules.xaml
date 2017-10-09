@@ -5,26 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTestApp"
         mc:Ignorable="d"
-        Title="Rules" Width="350" Height="380" ResizeMode="CanMinimize">
+        Title="Rules" Width="350" Height="455" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
           </Grid.RowDefinitions>
         <Button Name="Exit" Content="Close"  Click="Exit_Click" Grid.Row="1" VerticalContentAlignment="Center"/>
-        <RichTextBox Grid.Row="0" IsReadOnly="True" AutoWordSelection="False">
+        <RichTextBox Grid.Row="0" IsReadOnly="True" AutoWordSelection="False" SelectionOpacity="0" IsHitTestVisible="False" Block.LineHeight="6">
             <FlowDocument>
                 <Paragraph FontSize="18" Margin="0,Auto,Auto,Auto" TextAlignment="Center">
                     <Run FontWeight="Bold" Text="Автомат &quot;Лучники&quot;"/>
                 </Paragraph>
                 <Paragraph TextIndent="20">
-                    <Run Text="Лучники из разных стран выполняют стрельбу по мишени по очереди. Точка попадания каждого лучника зависит от его мастерства и появления ветра. "/>
+                    <Run Text="Лучники из разных с"/>
+                    <Run Text="т"/>
+                    <Run Text="ран выполняют стрельбу по мишени поочеред"/>
+                    <Run Text="но"/>
+                    <Run Text=". Точка попадания каждого лучника зависит от его мастерства и"/>
+                    <Run Text=" возможного"/>
+                    <Run Text=" появления ветра. "/>
                 </Paragraph>
                 <Paragraph TextIndent="20">
                     <Run Text="Страны и мастерство лучников задаются в пунктах настроек &quot;Выбор сложности&quot; и &quot;Выбор стран&quot; соответственно."/>
+                    <Run Text=" Существует возможность задания случайных параметров кнопкой &quot;Random&quot; и сброс в заводские параметры кнопкой &quot;Default&quot;"/>
                 </Paragraph>
                 <Paragraph TextIndent="20">
-                    <Run Text="Во время работы пункт настроек становится неактивным. "/>
+                    <Run Text="Во время работы пункт"/>
+                    <Run Text="ы"/>
+                    <Run Text=" "/>
+                    <Run Text="меню становятся не активными. Нажатие кнопки &quot;Пауза&quot; позволяет просмотреть раздел меню &quot;Помощь&quot;."/>
+                </Paragraph>
+                <Paragraph TextIndent="20">
+                    <Run Text="Существует возможность сохранения и загрузки пользовательских настроек из файла. Осуществляется через нажание кнопок &quot;Сохранить&quot; и &quot;Открыть&quot; в разделе меню &quot;Файл&quot;."/>
                 </Paragraph>
                 <Paragraph TextIndent="20">
                     <Run Text="На главном экране можно изменять скорость стрельбы, располагаются кнопки Старт/стоп, Пауза/Продолжить и Выход."/>
