@@ -109,11 +109,11 @@ namespace WPFTestApp
                     else if (winners.Count == 3)
                     {
                         int currentscore = 10;
-                        while (winners.Count == 3)  //В случае с тремя сначала отсекаем одного, после повторяем поиск как для двух
+                        do  //В случае с тремя сначала отсекаем одного, после повторяем поиск как для двух
                         {
                             int trueCount = 0;
                             int falseCount = 0;
-                            for (int i = 0; i<3;i++)
+                            for (int i = 0; i < 3; i++)
                             {
                                 int current = winners[i];
                                 player[current].Shoot = archers[current].PointsList.IndexOf(currentscore) != -1;
@@ -134,6 +134,7 @@ namespace WPFTestApp
                                 winners.RemoveAt(i);
                                 player[i].reason = "Highest";
                                 PlacesForTwo(archers, ref currentPlace);
+                                currentscore = 0;
                             }
                             else if (falseCount == 1)
                             {
@@ -143,10 +144,11 @@ namespace WPFTestApp
                                 PlacesForTwo(archers, ref currentPlace);
                                 player[i].place = currentPlace++;
                                 player[i].reason = "lowest";
+                                currentscore = 0;
                             }
                             else currentscore--;
 
-                        }
+                        } while (currentscore > 0);
                         if (player[winner[0]].place == 0) //Если мы даже так не нашли разницы, то даем им случайные места.
                         {
                             Random random = new Random();
@@ -180,7 +182,7 @@ namespace WPFTestApp
             int currentscore = 10;
             int first = winners[0];
             int second = winners[1];
-            while (currentscore > 0) //Пойдем от самого верха спускать уровень и смотреть.
+            do //Пойдем от самого верха спускать уровень и смотреть.
             {
                 player[first].Shoot = archers[first].PointsList.IndexOf(currentscore) != -1;
                 player[second].Shoot = archers[second].PointsList.IndexOf(currentscore) != -1;
@@ -204,7 +206,7 @@ namespace WPFTestApp
                     }
                 }
                 else currentscore--;
-            }
+            } while (currentscore > 0);
             if (player[first].place == 0) //Если мы даже так не нашли разницы, то даем им одинаковые места.
             {
                 Random random = new Random();

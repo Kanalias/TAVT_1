@@ -146,7 +146,7 @@ namespace WPFTestApp
         {
             int i = 0;
             CountriesList.Clear();
-            for (i = 0; i<=7; i++)
+            for (i = 0; i<=15; i++)
             {
                 GameData.Flags[i].IsFree = true;
                 CountriesList.Add(i);

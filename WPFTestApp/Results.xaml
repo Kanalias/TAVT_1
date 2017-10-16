@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTestApp"
         mc:Ignorable="d"
-        Title="Results" Height="500" Width="826" ResizeMode="CanMinimize">
+        Title="Results" Height="550" Width="826" ResizeMode="CanMinimize">
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="364"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="0"/>

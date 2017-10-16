@@ -197,26 +197,7 @@ namespace WPFTestApp
             ArrowLine.Visibility = Visibility.Hidden;
             ArrowLowCap.Visibility = Visibility.Hidden;
             ArrowUpCap.Visibility = Visibility.Hidden;
-            if (currentArcher == 0 && Archers[currentArcher].shoots == GameData.Shoots)
-            {
-                int max = Archers[0].Count;
-                int indmax = 0;
-                for (int i = 0; i<=7;i++)
-                {
-                    if(Archers[i].Count>max)
-                    {
-                        max = Archers[i].Count;
-                        indmax = i;
-                    }
-                }
-                Window Results = new Results(Archers);
-                Results.ShowDialog();
-                //MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
-                //StopShooting();
-                GameIsOver = true;
-                timer.IsEnabled = false;
-            }
-            else if (!pause)
+            if (!pause)
             {
                 //timer.IsEnabled = false;
                 PartFlag.Source = Archers[currentArcher].Flag;
@@ -241,8 +222,27 @@ namespace WPFTestApp
                 //Thread.Sleep(timer.Interval);
                 //timer.IsEnabled = true;
             }
+            if (Archers[currentArcher].shoots == GameData.Shoots)
+            {
+                int max = Archers[0].Count;
+                int indmax = 0;
+                for (int i = 0; i <= 7; i++)
+                {
+                    if (Archers[i].Count > max)
+                    {
+                        max = Archers[i].Count;
+                        indmax = i;
+                    }
+                }
+                Window Results = new Results(Archers);
+                Results.ShowDialog();
+                //MessageBox.Show("End of competition. Winner is " + Archers[indmax].Country + " with " + Archers[indmax].Count.ToString() +" points");
+                //StopShooting();
+                GameIsOver = true;
+                timer.IsEnabled = false;
+            }
             //throw new NotImplementedException();
-            
+
         }
 
 		private void ExitButtonClick(object sender, RoutedEventArgs e)

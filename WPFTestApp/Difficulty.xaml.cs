@@ -92,7 +92,7 @@ namespace WPFTestApp
 
         private void LampBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ' | e.Text.ToString()[0] == '0')
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) | e.Text.ToString()[0] == ' ')
             {
                 ErrorLabel.Content = "Wrong button";
                 ErrorTimer.Start();
